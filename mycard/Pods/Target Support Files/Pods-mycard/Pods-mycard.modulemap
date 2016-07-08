@@ -1,0 +1,6 @@
+framework module Pods_mycard {
+  umbrella header "Pods-mycard-umbrella.h"
+
+  export *
+  module * { export * }
+}

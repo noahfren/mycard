@@ -51,18 +51,22 @@ class AddContactInfoViewController: UIViewController {
             
             let newContact = CNMutableContact()
             
+            // Adding info from text field to newContact object
             newContact.givenName = firstName!
             newContact.familyName = lastName!
             let email = CNLabeledValue(label: CNLabelHome, value: emailAddress!)
             newContact.emailAddresses = [email]
-            let phone = CNLabeledValue(label: CNLabelPhoneNumberMobile, value: phoneNumber!)
+            let phone = CNLabeledValue(label: CNLabelPhoneNumberMobile, value: CNPhoneNumber(stringValue: phoneNumber!))
             newContact.phoneNumbers = [phone]
             
+            // Saving the newContact as NSData
             let contactData = NSKeyedArchiver.archivedDataWithRootObject(newContact)
             
+            // Sending contactData to main ViewController
             let viewController = segue.destinationViewController as! ViewController
             viewController.contactToSend = contactData
             
+            // Saving contactData to NSUserDefault
             NSUserDefaults.standardUserDefaults().setValue(contactData, forKey: "contact")
         }
     }

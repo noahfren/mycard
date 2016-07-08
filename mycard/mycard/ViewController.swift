@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var tblPeers: UITableView!
     var contactToSend: NSData!
+    var contactStore = CNContactStore()
     
     // Declaring and instantiating the app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -25,17 +26,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Setting the mpcManager's delegate to this View Controller
         appDelegate.mpcManager.delegate = self
         
+        // Start searching for other devices running the app
         appDelegate.mpcManager.browser.startBrowsingForPeers()
         
+        // Start advertising to other devices
         appDelegate.mpcManager.advertiser.startAdvertisingPeer()
     }
     
     override func viewDidAppear(animated: Bool) {
+        // Attempting to load user's contact info
         if let data = NSUserDefaults.standardUserDefaults().objectForKey("contact") as? NSData {
             contactToSend = data
         }
+        // If no info is found, segue to getContactInfoViewController
         else{
-            
+            self.performSegueWithIdentifier("GetContactInfo", sender: self)
         }
     }
 
@@ -77,8 +82,46 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func connectedWithPeer(peerID: MCPeerID) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
             print("Connection has been made!")
+            
+            // Sending contact data to peer at peerID
             self.appDelegate.mpcManager.sendData(dataToSend: self.contactToSend, toPeer: peerID)
         }
+    }
+    
+    func dataRecieved(data: NSData) {
+        let contactRecieved = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! CNContact
+        
+        /*let contactViewController = CNContactViewController(forContact: contactRecieved)
+        contactViewController.displayedPropertyKeys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey]
+        showViewController(contactViewController, sender: self)
+ */
+        // Extracting contact info to display from recievedContact
+        let number = (contactRecieved.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as! String
+        let email = contactRecieved.emailAddresses.first?.value as! String
+        let alert = UIAlertController(title: "", message: "\(contactRecieved.givenName)  \(contactRecieved.familyName)\nPhone: \(number)\nEmail: \(email)", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let acceptAction: UIAlertAction = UIAlertAction(title: "Save to Contacts", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            do {
+                let saveRequest = CNSaveRequest()
+                saveRequest.addContact(contactRecieved as! CNMutableContact, toContainerWithIdentifier: nil)
+                try self.contactStore.executeSaveRequest(saveRequest)
+            }
+            catch {
+                print("Could not save contact")
+            }
+        }
+        
+        let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

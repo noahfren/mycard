@@ -21,6 +21,8 @@ protocol MPCManagerDelegate {
     func invitationWasReceived(fromPeer: String)
     
     func connectedWithPeer(peerID: MCPeerID)
+    
+    func dataRecieved(data: NSData)
 }
 
 class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
@@ -135,6 +137,9 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         // Add alert view controller here
         print("Data was recieved")
+        
+        delegate?.dataRecieved(data)
+        
         return
     }
     
