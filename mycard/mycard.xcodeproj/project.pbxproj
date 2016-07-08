@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632F84F51D2FFB6E00ABF5FA /* AddContactInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */; };
 		F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */; };
 		F2F49EB01D2D48F200C5CFB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */; };
 		F2F49EB31D2D48F200C5CFB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactInfoViewController.swift; sourceTree = "<group>"; };
 		F2F49EAA1D2D48F200C5CFB4 /* mycard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mycard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */,
 				F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */,
 				F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */,
+				632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */,
 				F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */,
 				F2F49EC11D2D7B2300C5CFB4 /* PeerTableViewCell.swift */,
 				F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 				F2F49EB01D2D48F200C5CFB4 /* ViewController.swift in Sources */,
 				F2F49EC21D2D7B2300C5CFB4 /* PeerTableViewCell.swift in Sources */,
 				F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */,
+				632F84F51D2FFB6E00ABF5FA /* AddContactInfoViewController.swift in Sources */,
 				F2F49EC01D2D5C0700C5CFB4 /* MPCManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +307,7 @@
 				F2F49EBE1D2D48F200C5CFB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

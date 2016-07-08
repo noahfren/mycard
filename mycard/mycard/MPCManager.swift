@@ -117,13 +117,12 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     // This function sends our data, bro
-    func sendData(dictionaryWithData dictionary: Dictionary<String, String>, toPeer targetPeer: MCPeerID) -> Bool {
+    func sendData(dataToSend data: NSData, toPeer targetPeer: MCPeerID) -> Bool {
         
-        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
         let peersArray = [targetPeer]
         
         do {
-            try session.sendData(dataToSend, toPeers: peersArray, withMode: MCSessionSendDataMode.Reliable)
+            try session.sendData(data, toPeers: peersArray, withMode: MCSessionSendDataMode.Reliable)
             return true
         } catch {
             

@@ -8,11 +8,13 @@
 
 import UIKit
 import MultipeerConnectivity
+import Contacts
+import ContactsUI
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPCManagerDelegate {
 
     @IBOutlet weak var tblPeers: UITableView!
-    
+    var contactToSend: NSData!
     
     // Declaring and instantiating the app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -20,14 +22,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         // Setting the mpcManager's delegate to this View Controller
         appDelegate.mpcManager.delegate = self
         
         appDelegate.mpcManager.browser.startBrowsingForPeers()
         
         appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if let data = NSUserDefaults.standardUserDefaults().objectForKey("contact") as? NSData {
+            contactToSend = data
+        }
+        else{
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,7 +77,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func connectedWithPeer(peerID: MCPeerID) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
             print("Connection has been made!")
-            self.appDelegate.mpcManager.sendData(dictionaryWithData: ["Hey": "Sup"], toPeer: peerID)
+            self.appDelegate.mpcManager.sendData(dataToSend: self.contactToSend, toPeer: peerID)
         }
     }
     
@@ -90,6 +99,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.session, withContext: nil, timeout: 20)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
+    // unwind segue
+    @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
+        
+        // for now, simply defining the method is sufficient.
+        // we'll add code later
+        
+    }
+    
     
 }
 
