@@ -7,27 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		632F84F51D2FFB6E00ABF5FA /* AddContactInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */; };
+		A2E178F71276A01B828C66B6 /* Pods_mycard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F32C4125D59B259F989DAE38 /* Pods_mycard.framework */; };
+		F23DF2671D3D0F9A004D43B9 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */; };
+		F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */; };
+		F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A381D36939F00E255F2 /* EditInfoViewController.swift */; };
+		F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */; };
+		F2601A3E1D36BC5500E255F2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3D1D36BC5500E255F2 /* Card.swift */; };
+		F2601A401D36C9BD00E255F2 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */; };
 		F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */; };
-		F2F49EB01D2D48F200C5CFB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */; };
 		F2F49EB31D2D48F200C5CFB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */; };
 		F2F49EB51D2D48F200C5CFB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */; };
 		F2F49EB81D2D48F200C5CFB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB61D2D48F200C5CFB4 /* LaunchScreen.storyboard */; };
 		F2F49EC01D2D5C0700C5CFB4 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */; };
-		F2F49EC21D2D7B2300C5CFB4 /* PeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EC11D2D7B2300C5CFB4 /* PeerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactInfoViewController.swift; sourceTree = "<group>"; };
+		63B25C3D6382B0BF4660FB41 /* Pods-mycard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mycard/Pods-mycard.debug.xcconfig"; sourceTree = "<group>"; };
+		86C5999F24998EA87FD23B57 /* Pods-mycard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycard.release.xcconfig"; path = "Pods/Target Support Files/Pods-mycard/Pods-mycard.release.xcconfig"; sourceTree = "<group>"; };
+		F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseDeviceViewController.swift; path = "View Controllers/ChooseDeviceViewController.swift"; sourceTree = "<group>"; };
+		F2601A381D36939F00E255F2 /* EditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditInfoViewController.swift; path = "View Controllers/EditInfoViewController.swift"; sourceTree = "<group>"; };
+		F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerTableViewCell.swift; path = Views/PeerTableViewCell.swift; sourceTree = "<group>"; };
+		F2601A3D1D36BC5500E255F2 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		F2F49EAA1D2D48F200C5CFB4 /* mycard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mycard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F2F49EB21D2D48F200C5CFB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2F49EB71D2D48F200C5CFB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F2F49EB91D2D48F200C5CFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
-		F2F49EC11D2D7B2300C5CFB4 /* PeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerTableViewCell.swift; sourceTree = "<group>"; };
+		F32C4125D59B259F989DAE38 /* Pods_mycard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mycard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +45,63 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2E178F71276A01B828C66B6 /* Pods_mycard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C1D759A30D952DE361B223D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F32C4125D59B259F989DAE38 /* Pods_mycard.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F23DF2681D3D1105004D43B9 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */,
+				F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */,
+				F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		F2601A341D3691E200E255F2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */,
+				F2601A381D36939F00E255F2 /* EditInfoViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F2601A351D3691F900E255F2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F2601A361D36920000E255F2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F2601A3D1D36BC5500E255F2 /* Card.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		F2F49EA11D2D48F200C5CFB4 = {
 			isa = PBXGroup;
 			children = (
 				F2F49EAC1D2D48F200C5CFB4 /* mycard */,
 				F2F49EAB1D2D48F200C5CFB4 /* Products */,
+				FDDCB0CE18D759F594FBE5F2 /* Pods */,
+				3C1D759A30D952DE361B223D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,16 +117,25 @@
 			isa = PBXGroup;
 			children = (
 				F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */,
-				F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */,
-				F2F49EAF1D2D48F200C5CFB4 /* ViewController.swift */,
-				632F84F41D2FFB6E00ABF5FA /* AddContactInfoViewController.swift */,
+				F23DF2681D3D1105004D43B9 /* Managers */,
+				F2601A361D36920000E255F2 /* Models */,
+				F2601A341D3691E200E255F2 /* View Controllers */,
+				F2601A351D3691F900E255F2 /* Views */,
 				F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */,
-				F2F49EC11D2D7B2300C5CFB4 /* PeerTableViewCell.swift */,
 				F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */,
 				F2F49EB61D2D48F200C5CFB4 /* LaunchScreen.storyboard */,
 				F2F49EB91D2D48F200C5CFB4 /* Info.plist */,
 			);
 			path = mycard;
+			sourceTree = "<group>";
+		};
+		FDDCB0CE18D759F594FBE5F2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				63B25C3D6382B0BF4660FB41 /* Pods-mycard.debug.xcconfig */,
+				86C5999F24998EA87FD23B57 /* Pods-mycard.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,9 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2F49EBC1D2D48F200C5CFB4 /* Build configuration list for PBXNativeTarget "mycard" */;
 			buildPhases = (
+				33A7EA7C4F88075F070D4907 /* [CP] Check Pods Manifest.lock */,
 				F2F49EA61D2D48F200C5CFB4 /* Sources */,
 				F2F49EA71D2D48F200C5CFB4 /* Frameworks */,
 				F2F49EA81D2D48F200C5CFB4 /* Resources */,
+				5856CC5BA1B11E9FEE92B45A /* [CP] Embed Pods Frameworks */,
+				26E839ADB956CEDC31A7CD49 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -140,15 +208,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		26E839ADB956CEDC31A7CD49 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mycard/Pods-mycard-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		33A7EA7C4F88075F070D4907 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5856CC5BA1B11E9FEE92B45A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mycard/Pods-mycard-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F2F49EA61D2D48F200C5CFB4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2F49EB01D2D48F200C5CFB4 /* ViewController.swift in Sources */,
-				F2F49EC21D2D7B2300C5CFB4 /* PeerTableViewCell.swift in Sources */,
+				F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */,
+				F2601A3E1D36BC5500E255F2 /* Card.swift in Sources */,
+				F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */,
+				F23DF2671D3D0F9A004D43B9 /* ImageManager.swift in Sources */,
+				F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */,
 				F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */,
-				632F84F51D2FFB6E00ABF5FA /* AddContactInfoViewController.swift in Sources */,
+				F2601A401D36C9BD00E255F2 /* RealmManager.swift in Sources */,
 				F2F49EC01D2D5C0700C5CFB4 /* MPCManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,6 +379,7 @@
 		};
 		F2F49EBD1D2D48F200C5CFB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63B25C3D6382B0BF4660FB41 /* Pods-mycard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -275,6 +395,7 @@
 		};
 		F2F49EBE1D2D48F200C5CFB4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86C5999F24998EA87FD23B57 /* Pods-mycard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (

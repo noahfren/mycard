@@ -10,7 +10,7 @@
 import Foundation
 import MultipeerConnectivity
 
-let SERVICE = "bb-nf-app"
+let SERVICE = "my-card-app"
 
 protocol MPCManagerDelegate {
     
@@ -67,7 +67,15 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // This function is called by the MPC when a nearby device is discovered
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         
-        foundPeers.append(peerID)
+        var addPeer = true
+        for peer in foundPeers {
+            if peer == peerID {
+                addPeer = false
+            }
+        }
+        if addPeer {
+            foundPeers.append(peerID)
+        }
         
         delegate?.foundPeer()
     }
@@ -82,7 +90,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             }
         }
         
-        delegate?.foundPeer()
+        delegate?.lostPeer()
     }
     
     // This function will display an error if the browsing can not finish
@@ -132,8 +140,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     
-    // This function runs when the user has recieved data, for now it will simply display an alert with the info it recieved
-    // MARK: TODO: Implement address book integration here
+    // This function runs when the user has recieved data
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         // Add alert view controller here
         print("Data was recieved")

@@ -1,17 +1,32 @@
 PODS:
+  - DZNEmptyDataSet (1.8.1)
+  - IQKeyboardManagerSwift (4.0.4)
+  - JSSAlertView (1.1.5)
   - Realm (1.0.1):
     - Realm/Headers (= 1.0.1)
   - Realm/Headers (1.0.1)
   - RealmSwift (1.0.1):
     - Realm (= 1.0.1)
+  - SVProgressHUD (2.0.3)
+  - TextFieldEffects (1.2.0)
 
 DEPENDENCIES:
+  - DZNEmptyDataSet
+  - IQKeyboardManagerSwift
+  - JSSAlertView
   - RealmSwift
+  - SVProgressHUD
+  - TextFieldEffects
 
 SPEC CHECKSUMS:
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  IQKeyboardManagerSwift: e0964d04d6a29b71016fd346dca13ecb80a2823a
+  JSSAlertView: 1ff5d4dcb28b00a38c0293c4c555231c02590be1
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: c4fdac7c975c93213a668ee327c150b7a6266277
+PODFILE CHECKSUM: 9c397cf4f145953ca7e7bec2e90ba12908f36b25
 
 COCOAPODS: 1.0.1
