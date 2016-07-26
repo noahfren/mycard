@@ -40,6 +40,12 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
             if let image = UIImage(contentsOfFile: userCard.imageFilePath) {
                 userImage.image = image.circle
             }
+            else {
+                let image = UIImage(named: "defaultUser")
+                let smallerImage = ImageHelper.resizeImage(image!, targetSize: CGSize(width: 150, height: 150))
+                userImage.image = smallerImage.circle
+                ImageHelper.saveImageAsJPEG("userImage.jpeg", image: smallerImage.circle!)
+            }
             
         }
         // If no info is found, segue to getContactInfoViewController

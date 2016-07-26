@@ -69,7 +69,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         var addPeer = true
         for peer in foundPeers {
-            if peer == peerID {
+            if peer.displayName == peerID.displayName {
                 addPeer = false
             }
         }
