@@ -7,21 +7,52 @@
 //
 
 import UIKit
-//import IQKeyboardManagerSwift
+import Parse
+
+let APP_ID = "myCard"
+let SERVER_URL = "https://mycard-nf.herokuapp.com/parse"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var mpcManager: MPCManager!
+    var currentUserCard: Card!
     
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Override point for customization after application launch.
-        mpcManager = MPCManager()
-        //IQKeyboardManager.sharedManager().enable = true
+        
+        
+        // MARK: Initializing Parse
+        let config = ParseClientConfiguration {
+            $0.applicationId = APP_ID
+            $0.server = SERVER_URL
+        }
+        
+        Card.registerSubclass()
+        
+        Parse.initializeWithConfiguration(config)
+        
+        // MARK: Temporary user log-in mechanism
+        do {
+            try PFUser.logInWithUsername("test_user1", password: "password")
+        } catch {
+            print("Unable to log in")
+        }
+        
+        if let currentUser = PFUser.currentUser() {
+            print("\(currentUser.username!) logged in successfully")
+            currentUserCard = ParseManager.getCardForCurrentUser()
+            currentUserCard.fetchImage() {() -> Void in }
+            self.mpcManager = MPCManager(currentUserCard: self.currentUserCard, currentUserID: currentUser.objectId!)
+            
+        } else {
+            print("No logged in user :(")
+        }
+        
         
         return true
     }

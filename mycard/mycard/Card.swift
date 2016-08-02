@@ -7,75 +7,77 @@
 //
 
 import Foundation
-import RealmSwift
+import UIKit
 import Contacts
+import Parse
 
-class Card: Object {
+class Card: PFObject, PFSubclassing {
+    
+    // MARK: - Properties
     // Contact info fields
-    dynamic var firstName = ""
-    dynamic var lastName = ""
-    dynamic var phoneNumber = ""
-    dynamic var emailAddress = ""
+    @NSManaged var firstName: String?
+    @NSManaged var lastName: String?
+    @NSManaged var phoneNumber: String?
+    @NSManaged var email: String?
     
     // Profile picture
-    // TODO: Set default to first and last initials a la Apple's contacts
-    dynamic var imageFilePath = ""
+    @NSManaged var imageFile: PFFile?
+    var image: UIImage?
+    
+    // Owner of card
+    @NSManaged var isOwnedBy: PFUser?
+    
+    
+    // MARK: PFSubclassing Protocol
+    override init () {
+        super.init()
+    }
+    
+    override class func initialize() {
+        var onceToken : dispatch_once_t = 0;
+        dispatch_once(&onceToken) {
+            // inform Parse about this subclass
+            self.registerSubclass()
+        }
+    }
+    
+    static func parseClassName() -> String {
+        return "Card"
+    }
     
     // Function to parse card data into CNContact object
     // TODO: handle error cases where not all data is available
-    func toCNContact(image: UIImage) -> CNMutableContact {
+    func toCNContact() -> CNMutableContact {
         
         let returnContact = CNMutableContact()
         
-        returnContact.givenName = firstName
-        returnContact.familyName = lastName
+        returnContact.givenName = firstName!
+        returnContact.familyName = lastName!
         
-        let phoneCN = CNPhoneNumber(stringValue: phoneNumber)
+        let phoneCN = CNPhoneNumber(stringValue: phoneNumber!)
         
         // Add email as Work email
-        returnContact.emailAddresses = [CNLabeledValue(label: CNLabelWork, value: emailAddress)]
+        returnContact.emailAddresses = [CNLabeledValue(label: CNLabelWork, value: email!)]
         
         // Add phone number as Mobile number
         returnContact.phoneNumbers = [CNLabeledValue(label: CNLabelPhoneNumberMobile, value: phoneCN)]
         
         // Add contact picture
-        returnContact.imageData = NSKeyedArchiver.archivedDataWithRootObject(image)
+        returnContact.imageData = NSKeyedArchiver.archivedDataWithRootObject(image!)
         
         return returnContact
     }
     
-    // Function to convert card data into NSData object
-    // This could potentially convert the data to a dictionary then codify that (for added flexibility with contact fields)
-    func toNSData() -> NSData {
-        
-        let imageData = ImageHelper.imageToNSData(self.imageFilePath)
-        let cardDictionary = ["firstName": self.firstName, "lastName": self.lastName, "phoneNumber": self.phoneNumber, "emailAddress": self.emailAddress, "imageData": imageData]
-        return NSKeyedArchiver.archivedDataWithRootObject(cardDictionary)
-        
+    func fetchImage(completionBlock: () -> Void) {
+        do {
+            let data = try self.imageFile?.getData()
+            self.image = UIImage(data: data!, scale:1.0)
+            completionBlock()
+        }
+        catch {
+            print("could not get image")
+        }
     }
+    
 }
 
-// Function to convert NSData to a card object
-// Requires data to be a codified Card object
-// This could potentially convert the data to a dictionary then codify that (for added flexibility with contact fields)
-func dataToCard(data: NSData) -> Card {
-    
-    let cardDictionary =  NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Dictionary<String, AnyObject>
-    
-    let card = Card()
-    
-    card.firstName = cardDictionary["firstName"]! as! String
-    card.lastName = cardDictionary["lastName"]! as! String
-    card.phoneNumber = cardDictionary["phoneNumber"]! as! String
-    card.emailAddress = cardDictionary["emailAddress"]! as! String
-
-    let imageData = cardDictionary["imageData"]! as! NSData
-    let image = NSKeyedUnarchiver.unarchiveObjectWithData(imageData) as! UIImage
-    let imageFileName = ImageHelper.randomImageFileName()
-    let imageFilePath = ImageHelper.getImageDirectory(withFileName: imageFileName)
-    
-    card.imageFilePath = imageFilePath
-    ImageHelper.saveImageAsJPEG(imageFilePath, image: image)
-    
-    return card
-}

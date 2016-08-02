@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DZNEmptyDataSet.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -15,6 +20,11 @@
 			<false/>
 		</dict>
 		<key>JSSAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -44,6 +54,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>iCarousel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -57,17 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>24BBB9C043B0C5095FFEA0E4F556ED6D</key>
+		<key>2C8AA1BAF35413BDB954A1DF93576ED1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2FF06C7221C8D0A0F17BE7B16964702C</key>
+		<key>3634ABA74A6F41DB3C7516A583373EE8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5772A437C71450E86CAC7DA6796EA22B</key>
+		<key>52641188002914EAAD489D17E59D1B87</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +92,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AF63879E9BCAA2A2A0C720A0C24B7D5C</key>
+		<key>84C07442967F05016A121B7E7281B46D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E58BA3E5AC135848AE5D6D422081EA4D</key>
+		<key>AD826CFE9A12B702E58E93C744F1ECCC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B272B33F162D6E5C3510BA50ECF2684B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDF998FC122FBE10B693DECE5BB083E5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D5AF25355D57183CFE6BB1B921EE9B56</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,7 +1,11 @@
 PODS:
+  - Bolts/Tasks (1.7.0)
   - DZNEmptyDataSet (1.8.1)
+  - iCarousel (1.8.2)
   - IQKeyboardManagerSwift (4.0.4)
   - JSSAlertView (1.1.5)
+  - Parse (1.13.0):
+    - Bolts/Tasks (~> 1.6)
   - Realm (1.0.1):
     - Realm/Headers (= 1.0.1)
   - Realm/Headers (1.0.1)
@@ -12,21 +16,26 @@ PODS:
 
 DEPENDENCIES:
   - DZNEmptyDataSet
+  - iCarousel
   - IQKeyboardManagerSwift
   - JSSAlertView
+  - Parse
   - RealmSwift
   - SVProgressHUD
   - TextFieldEffects
 
 SPEC CHECKSUMS:
+  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   IQKeyboardManagerSwift: e0964d04d6a29b71016fd346dca13ecb80a2823a
   JSSAlertView: 1ff5d4dcb28b00a38c0293c4c555231c02590be1
+  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 9c397cf4f145953ca7e7bec2e90ba12908f36b25
+PODFILE CHECKSUM: 556043a2dbf15c238d359763ba20742768c46889
 
 COCOAPODS: 1.0.1

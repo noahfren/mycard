@@ -12,6 +12,13 @@ import MultipeerConnectivity
 
 let SERVICE = "my-card-app"
 
+
+// MARK: TODO: Add Reference to parse user object
+struct peerStruct {
+    var id: MCPeerID
+    var userInfo: Dictionary<String, String>
+}
+
 protocol MPCManagerDelegate {
     
     func foundPeer()
@@ -21,8 +28,6 @@ protocol MPCManagerDelegate {
     func invitationWasReceived(fromPeer: String)
     
     func connectedWithPeer(peerID: MCPeerID)
-    
-    func dataRecieved(data: NSData)
 }
 
 class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
@@ -34,15 +39,20 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var browser: MCNearbyServiceBrowser!
     var advertiser: MCNearbyServiceAdvertiser!
     
-    var foundPeers = [MCPeerID]()
+    var foundPeers = [peerStruct]()
     
     // This function alias will act based on whether the user accepts their invite (bool == true)
     // or declines the invite (bool == false)
     var invitationHandler: ((Bool, MCSession) -> Void)!
     
-    override init() {
+    init(currentUserCard: Card, currentUserID: String) {
         super.init()
         
+        let discoveryInfo: Dictionary<String, String> = [
+            "firstName": currentUserCard.firstName!,
+            "lastName": currentUserCard.lastName!,
+            "cardId": currentUserCard.objectId!
+        ]
         // Initializing the peer with the name set as the current device's name
         // This peer's name will be what displays in the table cells as possible connections
         peer = MCPeerID(displayName: UIDevice.currentDevice().name)
@@ -59,7 +69,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         // Initializing the advertiser with our peer, the apps service id and discovery info
         // Discovery info will eventually be a dictionary containing the nearby contact name and preview pic
-        advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: nil, serviceType: SERVICE)
+        advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: discoveryInfo, serviceType: SERVICE)
         advertiser.delegate = self
         
     }
@@ -69,12 +79,12 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         var addPeer = true
         for peer in foundPeers {
-            if peer.displayName == peerID.displayName {
+            if peer.id == peerID.displayName {
                 addPeer = false
             }
         }
         if addPeer {
-            foundPeers.append(peerID)
+            foundPeers.append(peerStruct(id: peerID, userInfo: info!))
         }
         
         delegate?.foundPeer()
@@ -84,7 +94,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // First we loop through the array of peers and find the lost peer then delete it
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         for (index, aPeer) in foundPeers.enumerate() {
-            if aPeer == peerID {
+            if aPeer.id == peerID {
                 foundPeers.removeAtIndex(index)
                 break
             }
@@ -126,30 +136,6 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     
-    // This function sends our data, bro
-    func sendData(dataToSend data: NSData, toPeer targetPeer: MCPeerID) -> Bool {
-        
-        let peersArray = [targetPeer]
-        
-        do {
-            try session.sendData(data, toPeers: peersArray, withMode: MCSessionSendDataMode.Reliable)
-            return true
-        } catch {
-            
-            return false
-        }
-    }
-    
-    // This function runs when the user has recieved data
-    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        // Add alert view controller here
-        print("Data was recieved")
-        
-        delegate?.dataRecieved(data)
-        
-        return
-    }
-    
     
     //  ------ Other required functions for MCSessionDelegate that we don't need functionality for ----------
     // ------------------------------------------------------------------------------------------------------
@@ -162,6 +148,10 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
+        return
+    }
+    
+    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         return
     }
     

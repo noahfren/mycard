@@ -13,7 +13,10 @@
 		F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A381D36939F00E255F2 /* EditInfoViewController.swift */; };
 		F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */; };
 		F2601A3E1D36BC5500E255F2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3D1D36BC5500E255F2 /* Card.swift */; };
-		F2601A401D36C9BD00E255F2 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */; };
+		F29B369A1D48F8A300CFDD78 /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B36991D48F8A300CFDD78 /* ParseManager.swift */; };
+		F29B369E1D4AB03100CFDD78 /* ShareCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B369D1D4AB03100CFDD78 /* ShareCardsViewController.swift */; };
+		F29B36A41D4BD4D200CFDD78 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F29B36A31D4BD4D200CFDD78 /* CardView.xib */; };
+		F29B36A61D4FB20C00CFDD78 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B36A51D4FB20C00CFDD78 /* CardView.swift */; };
 		F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */; };
 		F2F49EB31D2D48F200C5CFB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */; };
 		F2F49EB51D2D48F200C5CFB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */; };
@@ -29,7 +32,10 @@
 		F2601A381D36939F00E255F2 /* EditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditInfoViewController.swift; path = "View Controllers/EditInfoViewController.swift"; sourceTree = "<group>"; };
 		F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerTableViewCell.swift; path = Views/PeerTableViewCell.swift; sourceTree = "<group>"; };
 		F2601A3D1D36BC5500E255F2 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		F29B36991D48F8A300CFDD78 /* ParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
+		F29B369D1D4AB03100CFDD78 /* ShareCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareCardsViewController.swift; path = "View Controllers/ShareCardsViewController.swift"; sourceTree = "<group>"; };
+		F29B36A31D4BD4D200CFDD78 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CardView.xib; path = Views/CardView.xib; sourceTree = "<group>"; };
+		F29B36A51D4FB20C00CFDD78 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
 		F2F49EAA1D2D48F200C5CFB4 /* mycard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mycard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F49EB21D2D48F200C5CFB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,9 +69,9 @@
 		F23DF2681D3D1105004D43B9 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				F2601A3F1D36C9BD00E255F2 /* RealmManager.swift */,
 				F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */,
 				F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */,
+				F29B36991D48F8A300CFDD78 /* ParseManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -75,6 +81,7 @@
 			children = (
 				F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */,
 				F2601A381D36939F00E255F2 /* EditInfoViewController.swift */,
+				F29B369D1D4AB03100CFDD78 /* ShareCardsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -83,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */,
+				F29B36A51D4FB20C00CFDD78 /* CardView.swift */,
+				F29B36A31D4BD4D200CFDD78 /* CardView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -202,6 +211,7 @@
 			files = (
 				F2F49EB81D2D48F200C5CFB4 /* LaunchScreen.storyboard in Resources */,
 				F2F49EB51D2D48F200C5CFB4 /* Assets.xcassets in Resources */,
+				F29B36A41D4BD4D200CFDD78 /* CardView.xib in Resources */,
 				F2F49EB31D2D48F200C5CFB4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,13 +271,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F29B369A1D48F8A300CFDD78 /* ParseManager.swift in Sources */,
 				F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */,
 				F2601A3E1D36BC5500E255F2 /* Card.swift in Sources */,
 				F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */,
+				F29B36A61D4FB20C00CFDD78 /* CardView.swift in Sources */,
 				F23DF2671D3D0F9A004D43B9 /* ImageManager.swift in Sources */,
 				F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */,
 				F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */,
-				F2601A401D36C9BD00E255F2 /* RealmManager.swift in Sources */,
+				F29B369E1D4AB03100CFDD78 /* ShareCardsViewController.swift in Sources */,
 				F2F49EC01D2D5C0700C5CFB4 /* MPCManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

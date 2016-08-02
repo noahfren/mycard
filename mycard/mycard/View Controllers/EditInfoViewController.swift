@@ -13,7 +13,10 @@ let USER_IMAGE_FILENAME = "userImage.jpeg"
 
 class EditInfoViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
+    // MARK: - Outlets and Properties
     var card: Card!
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -29,6 +32,7 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
     
     let imagePicker = UIImagePickerController()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,13 +41,13 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         
 
         // Do any additional setup after loading the view.
-        if let card = self.card {
+        if let card = appDelegate.currentUserCard {
             firstNameTextField.text = card.firstName
             lastNameTextField.text = card.lastName
-            emailAddressTextField.text = card.emailAddress
+            emailAddressTextField.text = card.email
             phoneNumberTextField.text = card.phoneNumber
             
-            if let image = UIImage(contentsOfFile: card.imageFilePath) {
+            if let image = card.image {
                 imageField.image = image
             }
             else {
@@ -66,9 +70,20 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         imageField.addGestureRecognizer(tapGesture)
         
     }
+
+    override func viewWillAppear(animated: Bool) {
+        imageField.layer.cornerRadius = imageField.frame.width / 2
+        imageField.clipsToBounds = true
+    }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Gesture Recognizer/ Image Picker Functions
     func tap(sender: AnyObject) {
-     
+        
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
             
             imagePicker.delegate = self
@@ -88,18 +103,8 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         imageField.image = smallerImage
         
     }
-
-    override func viewWillAppear(animated: Bool) {
-        imageField.layer.cornerRadius = imageField.frame.width / 2
-        imageField.clipsToBounds = true
-    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: Keyboard
+    // MARK: - Keyboard
     
     //Dismisses keyboard when screen is touched
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -155,20 +160,11 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
             card.firstName = firstNameTextField.text!
             card.lastName = lastNameTextField.text!
             card.phoneNumber = phoneNumberTextField.text!
-            card.emailAddress = emailAddressTextField.text!
+            card.email = emailAddressTextField.text!
             
             // Saving image to filesystem
             if let image = imageField.image {
-                ImageHelper.saveImageAsJPEG(USER_IMAGE_FILENAME, image: image)
-                card.imageFilePath = ImageHelper.getImageDirectory(withFileName: USER_IMAGE_FILENAME)
-            }
-            
-            // Updating or adding card in Realm
-            if let oldCard = RealmHelper.retrieveUserCard() {
-                RealmHelper.updateCard(oldCard, updatedCard: card)
-            }
-            else {
-                RealmHelper.addCard(card)
+                card.image = image
             }
 
         }

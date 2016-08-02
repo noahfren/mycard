@@ -10,5 +10,7 @@ target 'mycard' do
   pod 'SVProgressHUD'
   pod 'DZNEmptyDataSet'
   pod 'IQKeyboardManagerSwift'
+  pod 'Parse'
+  pod 'iCarousel'
   
 end

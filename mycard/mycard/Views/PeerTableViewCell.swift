@@ -11,7 +11,17 @@ import UIKit
 class PeerTableViewCell: UITableViewCell {
 
     @IBOutlet weak var peerIDLabel: UILabel!
+    @IBOutlet weak var peerIDImage: UIImageView!
     
+    var firstName: String!
+    var lastName: String!
+    var card: Card! {
+        didSet {
+            card.fetchImage() { () -> Void in
+                self.peerIDImage.image = self.card.image!.circle!
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +33,5 @@ class PeerTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    
 
 }
