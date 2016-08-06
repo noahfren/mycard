@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class CardView: UIView {
     
@@ -14,8 +15,8 @@ class CardView: UIView {
 
     @IBOutlet weak var image: UIImageView! {
         didSet {
-            image.layer.cornerRadius = image.frame.size.width / 2
-            image.clipsToBounds = true
+            //image.layer.cornerRadius = image.frame.size.height / 2
+            //image.clipsToBounds = true
         }
     }
     @IBOutlet weak var firstNameLabel : UILabel!
@@ -26,11 +27,11 @@ class CardView: UIView {
     var card: Card! {
         didSet {
             if let temp = card.image {
-                image.image = temp.square
+                image.image = temp.circle!
             }
             else {
                 card.fetchImage() { () -> Void in
-                    self.image.image = self.card.image!
+                    self.image.image = self.card.image!.circle!
                 }
             }
             firstNameLabel.text = card.firstName
@@ -59,6 +60,18 @@ class CardView: UIView {
         view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         // Adding custom subview on top of our view
         addSubview(view)
+        
+        // Add border
+        // view.layer.borderWidth = 1
+        // view.layer.borderColor = UIColor.lightGrayColor().CGColor
+        
+        // Add shadow
+        view.layer.shadowColor = UIColor.grayColor().CGColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSizeZero
+        view.layer.shadowRadius = 2
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).CGPath
+        
     }
     
     func loadViewFromNib() -> UIView {

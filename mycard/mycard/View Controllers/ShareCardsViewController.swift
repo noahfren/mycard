@@ -69,10 +69,10 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
     }
     
     override func viewDidLayoutSubviews() {
-        
-        userCardView = CardView(frame: userCardSuperview.bounds)
-        userCardSuperview.addSubview(userCardView)
-        
+        if userCardView == nil {
+            userCardView = CardView(frame: userCardSuperview.bounds)
+            userCardSuperview.addSubview(userCardView)
+        }
         userCardView.card = appDelegate.currentUserCard
     }
 
@@ -100,7 +100,9 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
             //recycled and used with other index values later
             
             // Set up view inside items here
-            cardView = CardView(frame: CGRect(origin: CGPointZero, size: CGSizeMake(350, 200)))
+            let cardWidth = (self.carousel.frame.width - 20)
+            let cardHeight = cardWidth * (4/7)
+            cardView = CardView(frame: CGRect(origin: CGPointZero, size: CGSizeMake(cardWidth, cardHeight)))
         }
         else
         {

@@ -87,9 +87,10 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLayoutSubviews() {
         
-        userCardView = CardView(frame: userCardSuperview.bounds)
-        userCardSuperview.addSubview(userCardView)
-        
+        if userCardView == nil {
+            userCardView = CardView(frame: userCardSuperview.bounds)
+            userCardSuperview.addSubview(userCardView)
+        }
         userCardView.card = userCard
     }
 
