@@ -13,38 +13,67 @@ import MultipeerConnectivity
 let SERVICE = "my-card-app"
 
 
-// MARK: TODO: Add Reference to parse user object
-struct peerStruct {
+// MARK: - Peer Struct
+struct PeerStruct {
     var id: MCPeerID
     var userInfo: Dictionary<String, String>
 }
 
-protocol MPCManagerDelegate {
+// MARK: - Recieved Card Notifaction Struct
+class RecievedCardNotification {
+    var sentFrom: String
+    var cardId: String
+    
+    required init (sentFrom: String, cardId: String) {
+        
+        self.sentFrom = sentFrom
+        self.cardId = cardId
+    }
+    
+    func toDictionary() -> Dictionary<String, String> {
+        return Dictionary<String, String>(dictionaryLiteral: ("sentFrom", sentFrom), ("cardId", cardId))
+    }
+}
+
+// MARK: - Find Devices Delegate Protocol
+protocol MPCManagerFindDevicesDelegate {
     
     func foundPeer()
     
     func lostPeer()
     
-    func invitationWasReceived(fromPeer: String)
+    func invitationWasReceived(peerInfo: PeerStruct)
     
-    func connectedWithPeer(peerID: MCPeerID)
+    func connectedWithPeer(peerInfo: PeerStruct)
+    
+    func didNotConnectWithPeer(peerInfo: PeerStruct)
 }
 
+// MARK: - Share Data Delegate Protocol
+protocol MPCManagerShareDataDelegate {
+    
+    func recievedData(data: NSData)
+}
+
+// MARK: - MPC Manager
 class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    var delegate: MPCManagerDelegate?
+    // MARK: - Properties
+    var findDevicesDelegate: MPCManagerFindDevicesDelegate?
+    var shareDataDelegate: MPCManagerShareDataDelegate?
     
     var session: MCSession!
     var peer: MCPeerID!
     var browser: MCNearbyServiceBrowser!
     var advertiser: MCNearbyServiceAdvertiser!
     
-    var foundPeers = [peerStruct]()
+    var foundPeers = [PeerStruct]()
     
     // This function alias will act based on whether the user accepts their invite (bool == true)
     // or declines the invite (bool == false)
     var invitationHandler: ((Bool, MCSession) -> Void)!
     
+    // - Methods
     init(currentUserCard: Card, currentUserID: String) {
         super.init()
         
@@ -84,10 +113,10 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             }
         }
         if addPeer {
-            foundPeers.append(peerStruct(id: peerID, userInfo: info!))
+            foundPeers.append(PeerStruct(id: peerID, userInfo: info!))
         }
         
-        delegate?.foundPeer()
+        findDevicesDelegate?.foundPeer()
     }
     
     // This function is called by the MPC when a nearby device is no longer available
@@ -100,7 +129,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             }
         }
         
-        delegate?.lostPeer()
+        findDevicesDelegate?.lostPeer()
     }
     
     // This function will display an error if the browsing can not finish
@@ -114,7 +143,12 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         self.invitationHandler = invitationHandler
         
-        delegate?.invitationWasReceived(peerID.displayName)
+        for peer in foundPeers {
+            if peer.id == peerID {
+                findDevicesDelegate?.invitationWasReceived(peer)
+            }
+        }
+        
     }
     
     // This function runs when the advertiser could not start, it displays an error message to the user
@@ -123,19 +157,40 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
-        switch state {
-            case MCSessionState.Connected:
-                print("Connected to session: \(session)")
-                delegate?.connectedWithPeer(peerID)
-                
-            case MCSessionState.Connecting:
-                print("Connecting to session: \(session)")
-                
-            default:
-                print("Did not connect to session: \(session)")
+        
+        for peer in foundPeers {
+            if peer.id == peerID {
+                switch state {
+                case MCSessionState.Connected:
+                    findDevicesDelegate?.connectedWithPeer(peer)
+                    print("Connected to session: \(session.connectedPeers)")
+                    
+                case MCSessionState.Connecting:
+                    print("Connecting to session: \(session.connectedPeers)")
+                    
+                default:
+                    findDevicesDelegate?.didNotConnectWithPeer(peer)
+                    print("Did not connect to session: \(session.connectedPeers)")
+                    
+                }
+            }
         }
     }
     
+    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
+        
+        shareDataDelegate?.recievedData(data)
+        return
+    }
+    
+    func sendNotification(notification: RecievedCardNotification, connectedPeer: MCPeerID) {
+        let data = NSKeyedArchiver.archivedDataWithRootObject(notification.toDictionary())
+        do {
+            try session.sendData(data, toPeers: [connectedPeer], withMode: .Reliable)
+        } catch {
+            print("could not notification data over session")
+        }
+    }
     
     //  ------ Other required functions for MCSessionDelegate that we don't need functionality for ----------
     // ------------------------------------------------------------------------------------------------------
@@ -148,10 +203,6 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
-        return
-    }
-    
-    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         return
     }
     

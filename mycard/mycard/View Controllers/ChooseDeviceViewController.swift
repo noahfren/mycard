@@ -12,16 +12,25 @@ import Contacts
 import JSSAlertView
 import Parse
 import DZNEmptyDataSet
+import SVProgressHUD
 
 let WET_ASPHALT = UIColorFromHex(0x34495e, alpha: 1)
 
-class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPCManagerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPCManagerFindDevicesDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     // MARK: - Outlets and Properties
-    @IBOutlet weak var userCard: CardView!
+    @IBOutlet weak var userCardSuperview: UIView!
     @IBOutlet weak var tblPeers: UITableView!
     
+    var userCardView: CardView!
+    var userCard: Card!
+    
     var contactStore = CNContactStore()
+    
+    var connectedPeerCard: Card?
+    var connectedPeerId: MCPeerID?
+    
+    var refreshControl: UIRefreshControl!
     
     // Declaring and instantiating the app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -35,7 +44,7 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         if let card = appDelegate.currentUserCard {
             
             print(card.firstName)
-            //userCard.card = card
+            userCard = card
             
         }
         // If no info is found, segue to getContactInfoViewController
@@ -43,21 +52,45 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
             self.performSegueWithIdentifier("GetContactInfo", sender: self)
         }
         
+        // Setting this VC as findDevicesDelegate for MPCManager
+        self.appDelegate.mpcManager.findDevicesDelegate = self
+        
         // Setting this VC as data source and delegate for DZNEmptyDataSet
         self.tblPeers.emptyDataSetSource = self
         self.tblPeers.emptyDataSetDelegate = self
+        
+        // Setting style for SVProgressHUD
+        SVProgressHUD.setDefaultStyle(.Custom)
+        SVProgressHUD.setForegroundColor(UIColor.whiteColor())
+        SVProgressHUD.setBackgroundColor(WET_ASPHALT)
+        
+        // Setting up Pull to refresh
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(tblPeers, action: #selector(ChooseDeviceViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
         
+        // Resetting the connected peer Id
+        connectedPeerId = nil
+        
         // Setting the mpcManager's delegate to this View Controller
-        appDelegate.mpcManager.delegate = self
+        appDelegate.mpcManager.findDevicesDelegate = self
         
         // Start searching for other devices running the app
         appDelegate.mpcManager.browser.startBrowsingForPeers()
         
         // Start advertising to other devices
         appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        userCardView = CardView(frame: userCardSuperview.bounds)
+        userCardSuperview.addSubview(userCardView)
+        
+        userCardView.card = userCard
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,13 +110,13 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // This function will create an alert to the user when they recieve an invitation to swap contacts
-    func invitationWasReceived(fromPeer: String) {
+    func invitationWasReceived(peerInfo: PeerStruct) {
         
         dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             let alertView = JSSAlertView().show(
                 self,
                 title: "Invitation Recieved",
-                text: "\(fromPeer) would like to share contact information with you.",
+                text: "\(peerInfo.userInfo["firstName"]!) \(peerInfo.userInfo["lastName"]!) would like to share contact information with you.",
                 buttonText: "Accept",
                 cancelButtonText: "Cancel",
                 color: WET_ASPHALT
@@ -91,14 +124,40 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
             alertView.setTextTheme(.Light)
             alertView.addAction() { () -> Void in
                 self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
+                SVProgressHUD.show()
             }
         }
     }
     
     // This function will perform an operation when the user connects with their peer
-    func connectedWithPeer(peerID: MCPeerID) {
+    func connectedWithPeer(peerInfo: PeerStruct) {
+        
+        for cell in (tblPeers.visibleCells as! [PeerTableViewCell]) {
+            if cell.card.objectId == peerInfo.userInfo["cardId"] {
+                connectedPeerCard = cell.card
+            }
+        }
+        connectedPeerId = peerInfo.id
+        
         // Segue here
-        self.performSegueWithIdentifier("ConnectedWithPeer", sender: self)
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            SVProgressHUD.dismiss()
+            self.performSegueWithIdentifier("ConnectedWithPeer", sender: self)
+        }
+    }
+    
+    func didNotConnectWithPeer(peerInfo: PeerStruct) {
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            SVProgressHUD.dismiss()
+            let alertView = JSSAlertView().show(
+                self,
+                title: "Connection Failed",
+                text: "Could not connect with \(peerInfo.userInfo["firstName"]!) \(peerInfo.userInfo["lastName"]!) at this time.",
+                buttonText: "Okay",
+                color: WET_ASPHALT
+            )
+            alertView.setTextTheme(.Light)
+        }
     }
     
     
@@ -115,6 +174,7 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         cell.peerIDImage.image = UIImage(named: "defaultUser")!.circle
         
         let query = PFQuery(className: "Card")
+        query.includeKey(ParseManager.ParseCardBelongsToUser)
         query.getObjectInBackgroundWithId(selectedPeerUserInfo["cardId"]!) {
             (result: PFObject?, error: NSError?) -> Void in
                 cell.card = result as? Card
@@ -124,10 +184,17 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as peerStruct
+        let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as PeerStruct
         
         appDelegate.mpcManager.browser.invitePeer(selectedPeer.id, toSession: appDelegate.mpcManager.session, withContext: nil, timeout: 20)
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        SVProgressHUD.show()
+    }
+    
+    func refresh(sender: AnyObject) {
+        tblPeers.reloadData()
     }
     
     
@@ -156,6 +223,12 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     // Preparing for segue to edit info screen
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        if segue.identifier == "ConnectedWithPeer" {
+            let shareCardsViewController = segue.destinationViewController as! ShareCardsViewController
+            shareCardsViewController.connectedUser = connectedPeerCard!.isOwnedBy
+            shareCardsViewController.connectedUserCard = connectedPeerCard!
+            shareCardsViewController.connectedPeerId = connectedPeerId!
+        }
     }
     
     // unwind segue

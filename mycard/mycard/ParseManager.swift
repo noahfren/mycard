@@ -53,7 +53,20 @@ class ParseManager {
         userHasCardObject.setObject(user, forKey: ParseUserHasCardUser)
         userHasCardObject.setObject(card, forKey: ParseUserHasCardCard)
         
-        userHasCardObject.saveInBackgroundWithBlock(nil)
+        let query = PFQuery(className: "UserHasCard")
+        query.whereKey(ParseUserHasCardUser, equalTo: user)
+        query.whereKey(ParseUserHasCardCard, equalTo: card)
+        query.findObjectsInBackgroundWithBlock() {
+            (results: [PFObject]?, error: NSError?) -> Void in
+            if let results = results {
+                if results.count == 0 {
+                    userHasCardObject.saveInBackgroundWithBlock(nil)
+                }
+            }
+            else {
+                userHasCardObject.saveInBackgroundWithBlock(nil)
+            }
+        }
     }
 
 }

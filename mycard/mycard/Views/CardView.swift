@@ -8,11 +8,16 @@
 
 import UIKit
 
-@IBDesignable class CardView: UIView {
+class CardView: UIView {
     
     var view: UIView!
 
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var image: UIImageView! {
+        didSet {
+            image.layer.cornerRadius = image.frame.size.width / 2
+            image.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var firstNameLabel : UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var phoneNumber: UILabel!
@@ -21,7 +26,7 @@ import UIKit
     var card: Card! {
         didSet {
             if let temp = card.image {
-                image.image = temp
+                image.image = temp.square
             }
             else {
                 card.fetchImage() { () -> Void in
@@ -37,18 +42,18 @@ import UIKit
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        xibSetup()
+        xibSetup(frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        xibSetup()
     }
     
-    func xibSetup() {
+    func xibSetup(frame: CGRect) {
         view = loadViewFromNib()
         
-        view.frame = bounds
+        view.frame = frame
+        print(frame)
         
         // Make the view stretch with containing view
         view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]

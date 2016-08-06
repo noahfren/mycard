@@ -8,15 +8,23 @@
 
 import UIKit
 import iCarousel
+import JSSAlertView
 import Parse
+import MultipeerConnectivity
 
-class ShareCardsViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
+class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, iCarouselDataSource, iCarouselDelegate {
     
     // MARK: - Outlets and Properties
     var collectedCards = [Card]()
     
     @IBOutlet var carousel: iCarousel!
-    @IBOutlet var cardView: CardView!
+    @IBOutlet var userCardSuperview: UIView!
+    
+    var userCardView: CardView!
+    
+    var connectedUser: PFUser!
+    var connectedUserCard: Card!
+    var connectedPeerId: MCPeerID!
     
     // Declaring and instantiating the app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -24,11 +32,13 @@ class ShareCardsViewController: UIViewController, iCarouselDataSource, iCarousel
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Declaring and instantiating the app delegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
         // Do any additional setup after loading the view.
-        carousel.type = .CoverFlow2
-        
-        cardView.card = appDelegate.currentUserCard
+        carousel.type = .Rotary
+        carousel.vertical = true
         
         ParseManager.getCardsRecievedByUser() {
             (results: [PFObject]?, error: NSError?) -> Void in
@@ -47,8 +57,23 @@ class ShareCardsViewController: UIViewController, iCarouselDataSource, iCarousel
                 self.collectedCards.append(card)
             }
             
+            self.carousel.reloadData()
         }
         
+        // Setting this VC as findDevicesDelegate for MPCManager
+        self.appDelegate.mpcManager.shareDataDelegate = self
+        
+        // Setting up gesture recognizer for user's card
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ShareCardsViewController.tap(_:)))
+        userCardSuperview.addGestureRecognizer(tapGesture)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        userCardView = CardView(frame: userCardSuperview.bounds)
+        userCardSuperview.addSubview(userCardView)
+        
+        userCardView.card = appDelegate.currentUserCard
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,13 +100,12 @@ class ShareCardsViewController: UIViewController, iCarouselDataSource, iCarousel
             //recycled and used with other index values later
             
             // Set up view inside items here
-            cardView = NSBundle.mainBundle().loadNibNamed("CardView", owner: self, options:nil)[0] as? CardView
+            cardView = CardView(frame: CGRect(origin: CGPointZero, size: CGSizeMake(350, 200)))
         }
         else
         {
             //get a reference to the label in the recycled view
             cardView = view as? CardView
-            
         }
         
         
@@ -97,7 +121,78 @@ class ShareCardsViewController: UIViewController, iCarouselDataSource, iCarousel
         
         return cardView!
     }
+    
+    func carousel(carousel: iCarousel, didSelectItemAtIndex index: Int) {
+        
+        let selectedCard = collectedCards[index]
+        sendCard(selectedCard)
+    }
 
+    // MARK: - MPC Share Data Delegate Functions
+    
+    func recievedData(data: NSData) {
+        
+        let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Dictionary<String, String>
+        let notificationStruct = RecievedCardNotification(sentFrom: dict["sentFrom"]!, cardId: dict["cardId"]!)
+        let recievedCardId = notificationStruct.cardId
+        let senderName = notificationStruct.sentFrom
+        
+        // MARK: TODO: Display alert view of card rather than a JSS Alert View
+        let query = PFQuery(className: "Card")
+        query.whereKey("objectId", equalTo: recievedCardId)
+        query.findObjectsInBackgroundWithBlock() {
+            (results: [PFObject]?, error: NSError?) -> Void in
+                let cardRecieved = results?.first as! Card?
+                if cardRecieved != nil {
+                    dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                        let notification = JSSAlertView().show(
+                            self,
+                            title: "New Card Recieved",
+                            text: "\(senderName) sent you a card.",
+                            buttonText: "Okay",
+                            color: WET_ASPHALT
+                        )
+                        notification.setTextTheme(.Light)
+                    }
+                    self.collectedCards.append(cardRecieved!)
+                    self.carousel.reloadData()
+                    self.carousel.scrollToItemAtIndex((self.collectedCards.count - 1), animated: true)
+                }
+        }
+        
+    }
+    
+    func sendCard(selectedCard: Card) {
+        
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            let alertView = JSSAlertView().show(
+                self,
+                title: "Send Card",
+                text: "Send \(selectedCard.firstName!) \(selectedCard.lastName!)'s card to \(self.connectedUserCard.firstName!) \(self.connectedUserCard.lastName!)?",
+                buttonText: "Confirm",
+                cancelButtonText: "Cancel",
+                color: WET_ASPHALT
+            )
+            alertView.setTextTheme(.Light)
+            alertView.addAction() { () -> Void in
+                ParseManager.sendCard(self.connectedUser, card: selectedCard)
+                let recievedCardNotification = RecievedCardNotification(
+                    sentFrom: "\(self.userCardView.card.firstName!) \(self.userCardView.card.lastName!)",
+                    cardId: selectedCard.objectId!
+                )
+                self.appDelegate.mpcManager.sendNotification(recievedCardNotification, connectedPeer: self.connectedPeerId)
+            }
+        }
+    }
+    
+    // MARK: - Gesture Recognizers
+    
+    func tap(sender: AnyObject) {
+        
+        sendCard(userCardView.card)
+    }
+    
+    
     /*
     // MARK: - Navigation
 

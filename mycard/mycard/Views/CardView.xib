@@ -17,7 +17,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CardView" customModule="mycard" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="350" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XP6-ez-ppd">
@@ -28,7 +28,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcd-80-Use">
-                    <rect key="frame" x="140" y="70" width="170" height="40"/>
+                    <rect key="frame" x="140" y="70" width="420" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="1LB-GU-0h6"/>
                     </constraints>
@@ -73,7 +73,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gf-qn-1dU">
-                    <rect key="frame" x="140" y="30" width="170" height="40"/>
+                    <rect key="frame" x="140" y="30" width="420" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="3hy-l1-L8e"/>
                     </constraints>
@@ -102,7 +102,6 @@
                 <constraint firstItem="XP6-ez-ppd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="uqY-ZD-VJE"/>
                 <constraint firstItem="XP6-ez-ppd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="w7u-p2-bfB"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="emailAddress" destination="zHH-JJ-D9Y" id="cDX-kO-C4r"/>
                 <outlet property="firstNameLabel" destination="7gf-qn-1dU" id="z1F-6c-gWT"/>

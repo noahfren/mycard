@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share myCard With:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcL-a1-2bA">
-                                <rect key="frame" x="220" y="377.5" width="159.5" height="21"/>
+                                <rect key="frame" x="220" y="377" width="159.5" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="pfa-Ec-VCM"/>
                                 </constraints>
@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDh-h0-4Zk">
-                                <rect key="frame" x="20" y="351.5" width="560" height="1"/>
+                                <rect key="frame" x="20" y="351" width="560" height="1"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="32a-IX-1Ke"/>
@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="foD-YL-QWB">
-                                <rect key="frame" x="0.0" y="398.5" width="600" height="137.5"/>
+                                <rect key="frame" x="0.0" y="398" width="600" height="137.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -100,7 +100,7 @@
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="en0-BX-lgG">
                                 <rect key="frame" x="10" y="10" width="580" height="331.5"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="350" id="DFS-9c-xeb"/>
                                     <constraint firstAttribute="width" secondItem="en0-BX-lgG" secondAttribute="height" multiplier="7:4" id="Fmw-w4-scy"/>
@@ -146,7 +146,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tblPeers" destination="foD-YL-QWB" id="fdH-M1-Yvd"/>
-                        <outlet property="userCard" destination="en0-BX-lgG" id="GAx-Mb-8tO"/>
+                        <outlet property="userCardSuperview" destination="en0-BX-lgG" id="aQe-WV-v44"/>
                         <segue destination="THL-xd-2b8" kind="show" identifier="GetContactInfo" id="q5q-K5-DBZ"/>
                         <segue destination="TRN-M2-ZTM" kind="show" identifier="ConnectedWithPeer" id="Frw-tn-cIv"/>
                     </connections>
@@ -155,7 +155,7 @@
             </objects>
             <point key="canvasLocation" x="1050" y="232"/>
         </scene>
-        <!--Share Cards View Controller-->
+        <!--Data Source-->
         <scene sceneID="XRw-zB-jEH">
             <objects>
                 <viewController id="TRN-M2-ZTM" customClass="ShareCardsViewController" customModule="mycard" customModuleProvider="target" sceneMemberID="viewController">
@@ -169,7 +169,10 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNB-CB-OrI" customClass="iCarousel">
                                 <rect key="frame" x="0.0" y="351.5" width="600" height="184.5"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="TRN-M2-ZTM" id="jJe-H8-yFc"/>
+                                    <outlet property="delegate" destination="TRN-M2-ZTM" id="nCB-d1-V3w"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEC-J7-i0f">
                                 <rect key="frame" x="10" y="10" width="580" height="331.5"/>
@@ -206,8 +209,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="cardView" destination="DEC-J7-i0f" id="rVE-be-t9R"/>
-                        <outlet property="carousel" destination="yNB-CB-OrI" id="L5X-gb-K8g"/>
+                        <outlet property="carousel" destination="yNB-CB-OrI" id="hYf-mK-Ewl"/>
+                        <outlet property="userCardSuperview" destination="DEC-J7-i0f" id="t6M-3p-MuB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="atj-eO-W4W" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -424,6 +427,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kbX-d8-NNc"/>
+        <segue reference="q5q-K5-DBZ"/>
     </inferredMetricsTieBreakers>
 </document>
