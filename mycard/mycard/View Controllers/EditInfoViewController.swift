@@ -8,6 +8,8 @@
 
 import UIKit
 import Contacts
+import JSSAlertView
+
 
 let USER_IMAGE_FILENAME = "userImage.jpeg"
 
@@ -24,20 +26,23 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var imageField: UIImageView!
     @IBAction func saveContactInfo(sender: AnyObject) {
-        
+        saveChanges()
     }
-    
-    var isViewShifted = false
-    var ogFrameOriginY: CGFloat!
+    @IBAction func signOut(sender: AnyObject) {
+        
+        appDelegate.parseLoginManager.signOutUser()
+        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+        let startViewController = storyboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+        appDelegate.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        appDelegate.window?.rootViewController = startViewController;
+        appDelegate.window?.makeKeyAndVisible()
+    }
     
     let imagePicker = UIImagePickerController()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditInfoViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditInfoViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
 
         // Do any additional setup after loading the view.
@@ -65,7 +70,7 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         }
         
         // Adding tap gesture recognizer for choosing an image
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(EditInfoViewController.tap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap))
         
         imageField.addGestureRecognizer(tapGesture)
         
@@ -81,17 +86,47 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+
     // MARK: - Gesture Recognizer/ Image Picker Functions
-    func tap(sender: AnyObject) {
+    func tap() {
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+        var source: UIImagePickerControllerSourceType!
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            let alert = JSSAlertView().show(
+                self,
+                title: "Choose photo source",
+                buttonText: "Camera",
+                cancelButtonText: "Library",
+                color: WET_ASPHALT
+            )
+            alert.setTextTheme(.Light)
+            alert.addAction() {
+                source = UIImagePickerControllerSourceType.Camera
+                if UIImagePickerController.isSourceTypeAvailable(source){
+                    
+                    self.imagePicker.delegate = self
+                    self.imagePicker.sourceType = source
+                    self.imagePicker.allowsEditing = false
+                    
+                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                }
+
+            }
+            alert.addCancelAction() {
+                source = UIImagePickerControllerSourceType.SavedPhotosAlbum
+                if UIImagePickerController.isSourceTypeAvailable(source){
+                    
+                    self.imagePicker.delegate = self
+                    self.imagePicker.sourceType = source
+                    self.imagePicker.allowsEditing = false
+                    
+                    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                }
+                
+            }
         }
+        
     }
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
@@ -111,63 +146,52 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         self.view.endEditing(true)
     }
     
-    // Raises view so that all text fields are visible
-    func keyboardWillShow(notification: NSNotification) {
-        
-        // Sets original y value for view's origin
-        if ogFrameOriginY == nil {
-            ogFrameOriginY = self.view.frame.origin.y
-        }
-        
-        // Get the y value for the bottom of the email text field
-        let emailFieldBottomLeftCorner = CGPoint(x: emailAddressTextField.frame.maxX, y: emailAddressTextField.frame.maxY)
-        let textFieldBottomYPosition = emailAddressTextField.superview?.convertPoint(emailFieldBottomLeftCorner, toView: nil).y
-        
-        // Get the height of the keyboard that will appear
-        let userInfo:NSDictionary = notification.userInfo!
-        let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.CGRectValue()
-        let keyboardMinY = keyboardRectangle.minY
-        
-        let shiftBy = (textFieldBottomYPosition! - keyboardMinY) + 10
-        
-        // if the view is not shifted already, shift the view up so that the bottom of the email field
-        // is 10 pts above the top of the keyboard
-        if (!isViewShifted && (shiftBy >= 0)) {
-            self.view.frame.origin.y -= shiftBy
-
-            isViewShifted = true
-        }
-
-        
-    }
     
-    // Lowers view when keyboard goes away
-    func keyboardWillHide(notification: NSNotification) {
-
-        if isViewShifted {
-            //self.view.frame.origin.y += (keyboardHeight - (self.emailAddressTextField.frame.maxY))
-            self.view.frame.origin.y = ogFrameOriginY
-            isViewShifted = false
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Save" {
+    // MARK: - Save Changes
+    func saveChanges() {
             
-            let card = Card()
-            
-            card.firstName = firstNameTextField.text!
-            card.lastName = lastNameTextField.text!
-            card.phoneNumber = phoneNumberTextField.text!
+        let card = Card()
+        
+        if ValidationManager.validateEmailAddress(emailAddressTextField.text) {
             card.email = emailAddressTextField.text!
-            
-            // Saving image to filesystem
-            if let image = imageField.image {
-                card.image = image
+        } else {
+            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                let alertView = JSSAlertView().show(
+                    self,
+                    title: "Invalid Email Address",
+                    text: "Please enter a valid email address.",
+                    buttonText: "Dismiss",
+                    color: WET_ASPHALT
+                )
+                alertView.setTextTheme(.Light)
             }
-
+            return
         }
+        
+        if ValidationManager.validatePhoneNumber(phoneNumberTextField.text) {
+            card.phoneNumber = phoneNumberTextField.text!
+        } else {
+            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                let alertView = JSSAlertView().show(
+                    self,
+                    title: "Invalid Phone Number",
+                    text: "Please enter a phone number in the form:\n(xxx) xxx-xxxx",
+                    buttonText: "Dismiss",
+                    color: WET_ASPHALT
+                )
+                alertView.setTextTheme(.Light)
+            }
+            return
+        }
+        card.firstName = firstNameTextField.text!
+        card.lastName = lastNameTextField.text!
+        
+        if let image = imageField.image {
+            card.image = image
+        }
+        
+        ParseManager.updateCard(card)
+
     }
 
 }

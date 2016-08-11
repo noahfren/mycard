@@ -8,6 +8,8 @@
 
 import UIKit
 import Parse
+import ParseUI
+import Contacts
 
 let APP_ID = "myCard"
 let SERVER_URL = "https://mycard-nf.herokuapp.com/parse"
@@ -19,7 +21,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mpcManager: MPCManager!
     var currentUserCard: Card!
     
-
+    // Declaring contact store
+    let contactStore = CNContactStore()
+    
+    // Declaring login manager
+    var parseLoginManager: ParseLoginManager!
+    
+    override init() {
+        super.init()
+        
+        parseLoginManager = ParseLoginManager {[unowned self] user, error in
+            // Initialize the ParseLoginManager with a callback
+            if error != nil {
+                print("error logging in")
+            }
+            else  if let _ = user {
+                // if login was successful, get user's card and display the TabBarController
+                self.currentUserCard = ParseManager.getCardForCurrentUser()
+                self.currentUserCard.fetchImage() {() -> Void in }
+                self.mpcManager = MPCManager(currentUserCard: self.currentUserCard, currentUserID: user!.objectId!)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabBarController")
+                
+                self.window?.rootViewController!.presentViewController(tabBarController, animated:true, completion:nil)
+            }
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -37,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.initializeWithConfiguration(config)
         
         // MARK: Temporary user log-in mechanism
-        do {
+        /*do {
             try PFUser.logInWithUsername("test_user1", password: "password")
         } catch {
             print("Unable to log in")
@@ -47,12 +75,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("\(currentUser.username!) logged in successfully")
             currentUserCard = ParseManager.getCardForCurrentUser()
             currentUserCard.fetchImage() {() -> Void in }
-            self.mpcManager = MPCManager(currentUserCard: self.currentUserCard, currentUserID: currentUser.objectId!)
+         
             
         } else {
             print("No logged in user :(")
+        }*/
+        
+        let user = PFUser.currentUser()
+        
+        let startViewController: UIViewController
+        
+        if (user != nil) {
+            // if we have a user, get user's card and set the TabBarController to be the initial view controller
+            currentUserCard = ParseManager.getCardForCurrentUser()
+            currentUserCard.fetchImage() {() -> Void in }
+            self.mpcManager = MPCManager(currentUserCard: self.currentUserCard, currentUserID: user!.objectId!)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        } else {
+            // Otherwise go to the Auth storyboard
+            let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
         }
         
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window?.rootViewController = startViewController;
+        self.window?.makeKeyAndVisible()
+
         
         return true
     }

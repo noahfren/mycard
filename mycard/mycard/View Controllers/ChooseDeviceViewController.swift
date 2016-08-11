@@ -48,9 +48,6 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
             
         }
         // If no info is found, segue to getContactInfoViewController
-        else{
-            self.performSegueWithIdentifier("GetContactInfo", sender: self)
-        }
         
         // Setting this VC as findDevicesDelegate for MPCManager
         self.appDelegate.mpcManager.findDevicesDelegate = self
@@ -75,8 +72,7 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         // Resetting the connected peer Id
         connectedPeerId = nil
         
-        // Setting the mpcManager's delegate to this View Controller
-        appDelegate.mpcManager.findDevicesDelegate = self
+        tblPeers.reloadData()
         
         // Start searching for other devices running the app
         appDelegate.mpcManager.browser.startBrowsingForPeers()
@@ -223,6 +219,9 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     
     // Preparing for segue to edit info screen
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        appDelegate.mpcManager.browser.stopBrowsingForPeers()
         
         if segue.identifier == "ConnectedWithPeer" {
             let shareCardsViewController = segue.destinationViewController as! ShareCardsViewController

@@ -31,7 +31,7 @@ class RecievedCardNotification {
     }
     
     func toDictionary() -> Dictionary<String, String> {
-        return Dictionary<String, String>(dictionaryLiteral: ("sentFrom", sentFrom), ("cardId", cardId))
+        return Dictionary<String, String>(dictionaryLiteral: ("type", "Card Recieved"), ("sentFrom", sentFrom), ("cardId", cardId))
     }
 }
 
@@ -53,6 +53,8 @@ protocol MPCManagerFindDevicesDelegate {
 protocol MPCManagerShareDataDelegate {
     
     func recievedData(data: NSData)
+    
+    func disconnectedFromSession()
 }
 
 // MARK: - MPC Manager
@@ -68,6 +70,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var advertiser: MCNearbyServiceAdvertiser!
     
     var foundPeers = [PeerStruct]()
+    var connectedPeer: MCPeerID?
     
     // This function alias will act based on whether the user accepts their invite (bool == true)
     // or declines the invite (bool == false)
@@ -163,15 +166,24 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 switch state {
                 case MCSessionState.Connected:
                     findDevicesDelegate?.connectedWithPeer(peer)
+                    connectedPeer = peerID
+                    foundPeers = []
                     print("Connected to session: \(session.connectedPeers)")
                     
                 case MCSessionState.Connecting:
                     print("Connecting to session: \(session.connectedPeers)")
                     
                 default:
-                    findDevicesDelegate?.didNotConnectWithPeer(peer)
-                    print("Did not connect to session: \(session.connectedPeers)")
-                    
+                    if (connectedPeer != nil) {
+                        shareDataDelegate?.disconnectedFromSession()
+                        connectedPeer = nil
+                        print("Did not connect to session: \(session.connectedPeers)")
+                    }
+                    else {
+                        findDevicesDelegate?.didNotConnectWithPeer(peer)
+                        print("Ended session: \(session.connectedPeers)")
+                        
+                    }
                 }
             }
         }
@@ -179,17 +191,40 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         
-        shareDataDelegate?.recievedData(data)
-        return
+        let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Dictionary<String, String>
+        let type = dict["type"]!
+        
+        if (type == "Card Recieved") {
+            shareDataDelegate?.recievedData(data)
+        }
+        else {
+            session.disconnect()
+        }
     }
     
     func sendNotification(notification: RecievedCardNotification, connectedPeer: MCPeerID) {
+        
         let data = NSKeyedArchiver.archivedDataWithRootObject(notification.toDictionary())
         do {
             try session.sendData(data, toPeers: [connectedPeer], withMode: .Reliable)
         } catch {
             print("could not notification data over session")
         }
+    }
+    
+    func disconnectFromSession() {
+        
+        let dictionary = Dictionary(dictionaryLiteral: ("type:", "Disconnect"))
+        let data = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
+        if let connectedPeer = connectedPeer {
+            do {
+                try session.sendData(data, toPeers: [connectedPeer], withMode: .Reliable)
+            } catch {
+                print("could not notification data over session")
+            }
+            self.connectedPeer = nil
+        }
+        session.disconnect()
     }
     
     //  ------ Other required functions for MCSessionDelegate that we don't need functionality for ----------

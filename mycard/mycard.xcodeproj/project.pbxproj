@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		A2E178F71276A01B828C66B6 /* Pods_mycard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F32C4125D59B259F989DAE38 /* Pods_mycard.framework */; };
+		F2235B4F1D56AA1200D3C906 /* CollectedCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2235B4E1D56AA1100D3C906 /* CollectedCardsViewController.swift */; };
+		F2235B701D581E1700D3C906 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2235B6F1D581E1700D3C906 /* ValidationManager.swift */; };
+		F2235B721D59205D00D3C906 /* ParseLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2235B711D59205D00D3C906 /* ParseLoginManager.swift */; };
+		F2235B741D5A545C00D3C906 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2235B731D5A545C00D3C906 /* Auth.storyboard */; };
 		F23DF2671D3D0F9A004D43B9 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */; };
+		F25ABEFB1D5A71FB0088A10F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFA1D5A71FB0088A10F /* LogInViewController.swift */; };
+		F25ABEFD1D5A83150088A10F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFC1D5A83150088A10F /* ProfileViewController.swift */; };
+		F25ABEFF1D5A8C020088A10F /* CardInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFE1D5A8C020088A10F /* CardInfoViewController.swift */; };
 		F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */; };
 		F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A381D36939F00E255F2 /* EditInfoViewController.swift */; };
 		F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */; };
@@ -27,7 +34,14 @@
 /* Begin PBXFileReference section */
 		63B25C3D6382B0BF4660FB41 /* Pods-mycard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mycard/Pods-mycard.debug.xcconfig"; sourceTree = "<group>"; };
 		86C5999F24998EA87FD23B57 /* Pods-mycard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycard.release.xcconfig"; path = "Pods/Target Support Files/Pods-mycard/Pods-mycard.release.xcconfig"; sourceTree = "<group>"; };
+		F2235B4E1D56AA1100D3C906 /* CollectedCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectedCardsViewController.swift; path = "View Controllers/CollectedCardsViewController.swift"; sourceTree = "<group>"; };
+		F2235B6F1D581E1700D3C906 /* ValidationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
+		F2235B711D59205D00D3C906 /* ParseLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLoginManager.swift; sourceTree = "<group>"; };
+		F2235B731D5A545C00D3C906 /* Auth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		F25ABEFA1D5A71FB0088A10F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "View Controllers/LogInViewController.swift"; sourceTree = "<group>"; };
+		F25ABEFC1D5A83150088A10F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F25ABEFE1D5A8C020088A10F /* CardInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfoViewController.swift; sourceTree = "<group>"; };
 		F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseDeviceViewController.swift; path = "View Controllers/ChooseDeviceViewController.swift"; sourceTree = "<group>"; };
 		F2601A381D36939F00E255F2 /* EditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditInfoViewController.swift; path = "View Controllers/EditInfoViewController.swift"; sourceTree = "<group>"; };
 		F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerTableViewCell.swift; path = Views/PeerTableViewCell.swift; sourceTree = "<group>"; };
@@ -72,16 +86,30 @@
 				F23DF2661D3D0F9A004D43B9 /* ImageManager.swift */,
 				F2F49EBF1D2D5C0700C5CFB4 /* MPCManager.swift */,
 				F29B36991D48F8A300CFDD78 /* ParseManager.swift */,
+				F2235B6F1D581E1700D3C906 /* ValidationManager.swift */,
+				F2235B711D59205D00D3C906 /* ParseLoginManager.swift */,
 			);
 			name = Managers;
+			sourceTree = "<group>";
+		};
+		F25ABEF91D5A71DB0088A10F /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				F25ABEFA1D5A71FB0088A10F /* LogInViewController.swift */,
+				F25ABEFC1D5A83150088A10F /* ProfileViewController.swift */,
+				F25ABEFE1D5A8C020088A10F /* CardInfoViewController.swift */,
+			);
+			name = Auth;
 			sourceTree = "<group>";
 		};
 		F2601A341D3691E200E255F2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F25ABEF91D5A71DB0088A10F /* Auth */,
 				F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */,
 				F2601A381D36939F00E255F2 /* EditInfoViewController.swift */,
 				F29B369D1D4AB03100CFDD78 /* ShareCardsViewController.swift */,
+				F2235B4E1D56AA1100D3C906 /* CollectedCardsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -131,6 +159,7 @@
 				F2601A341D3691E200E255F2 /* View Controllers */,
 				F2601A351D3691F900E255F2 /* Views */,
 				F2F49EB11D2D48F200C5CFB4 /* Main.storyboard */,
+				F2235B731D5A545C00D3C906 /* Auth.storyboard */,
 				F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */,
 				F2F49EB61D2D48F200C5CFB4 /* LaunchScreen.storyboard */,
 				F2F49EB91D2D48F200C5CFB4 /* Info.plist */,
@@ -211,6 +240,7 @@
 			files = (
 				F2F49EB81D2D48F200C5CFB4 /* LaunchScreen.storyboard in Resources */,
 				F2F49EB51D2D48F200C5CFB4 /* Assets.xcassets in Resources */,
+				F2235B741D5A545C00D3C906 /* Auth.storyboard in Resources */,
 				F29B36A41D4BD4D200CFDD78 /* CardView.xib in Resources */,
 				F2F49EB31D2D48F200C5CFB4 /* Main.storyboard in Resources */,
 			);
@@ -271,14 +301,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2235B701D581E1700D3C906 /* ValidationManager.swift in Sources */,
 				F29B369A1D48F8A300CFDD78 /* ParseManager.swift in Sources */,
+				F2235B4F1D56AA1200D3C906 /* CollectedCardsViewController.swift in Sources */,
 				F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */,
+				F2235B721D59205D00D3C906 /* ParseLoginManager.swift in Sources */,
 				F2601A3E1D36BC5500E255F2 /* Card.swift in Sources */,
 				F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */,
 				F29B36A61D4FB20C00CFDD78 /* CardView.swift in Sources */,
 				F23DF2671D3D0F9A004D43B9 /* ImageManager.swift in Sources */,
 				F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */,
+				F25ABEFB1D5A71FB0088A10F /* LogInViewController.swift in Sources */,
 				F2F49EAE1D2D48F200C5CFB4 /* AppDelegate.swift in Sources */,
+				F25ABEFF1D5A8C020088A10F /* CardInfoViewController.swift in Sources */,
+				F25ABEFD1D5A83150088A10F /* ProfileViewController.swift in Sources */,
 				F29B369E1D4AB03100CFDD78 /* ShareCardsViewController.swift in Sources */,
 				F2F49EC01D2D5C0700C5CFB4 /* MPCManager.swift in Sources */,
 			);

@@ -68,5 +68,43 @@ class ParseManager {
             }
         }
     }
+    
+    static func deleteCard(card: Card) {
+        
+        let query = PFQuery(className: "UserHasCard")
+        query.whereKey(ParseUserHasCardCard, equalTo: card)
+        query.whereKey(ParseUserHasCardUser, equalTo: PFUser.currentUser()!)
+        
+        query.findObjectsInBackgroundWithBlock() {
+            (results: [PFObject]?, error: NSError?) -> Void in
+            
+            if let userHasCard = results?.first {
+                userHasCard.deleteInBackground()
+            }
+        }
+    }
+    
+    static func updateCard(card: Card) {
+        
+        let query = PFQuery(className: "Card")
+        query.whereKey(ParseCardBelongsToUser, equalTo: PFUser.currentUser()!)
+        
+        query.findObjectsInBackgroundWithBlock() {
+            (results: [PFObject]?, error: NSError?) -> Void in
+            
+            if let userCard = results?.first as? Card {
+                userCard["firstName"] = card.firstName!
+                userCard["lastName"] = card.lastName!
+                userCard["email"] = card.email!
+                userCard["phoneNumber"] = card.phoneNumber!
+                
+                let imageData = NSKeyedArchiver.archivedDataWithRootObject(card.image!)
+                
+                userCard["image"] = PFFile(name: "profilePic.jpg", data: imageData)
+                
+                userCard.saveInBackground()
+            }
+        }
+    }
 
 }

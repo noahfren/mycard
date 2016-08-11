@@ -6,12 +6,16 @@ PODS:
   - JSSAlertView (1.1.5)
   - Parse (1.13.0):
     - Bolts/Tasks (~> 1.6)
+  - ParseUI (1.2.0):
+    - Bolts/Tasks (~> 1.3)
+    - Parse (~> 1.9)
   - Realm (1.0.1):
     - Realm/Headers (= 1.0.1)
   - Realm/Headers (1.0.1)
   - RealmSwift (1.0.1):
     - Realm (= 1.0.1)
   - SVProgressHUD (2.0.3)
+  - SwiftValidator (3.0.3)
   - TextFieldEffects (1.2.0)
 
 DEPENDENCIES:
@@ -20,8 +24,10 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JSSAlertView
   - Parse
+  - ParseUI
   - RealmSwift
   - SVProgressHUD
+  - SwiftValidator
   - TextFieldEffects
 
 SPEC CHECKSUMS:
@@ -31,11 +37,13 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: e0964d04d6a29b71016fd346dca13ecb80a2823a
   JSSAlertView: 1ff5d4dcb28b00a38c0293c4c555231c02590be1
   Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
+  ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
   RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftValidator: 0b6a48bf10364411b0d64c97f78665ff87ca9f8b
   TextFieldEffects: bc4fd3bd557321bd61a0762f3f50965477a36f62
 
-PODFILE CHECKSUM: 556043a2dbf15c238d359763ba20742768c46889
+PODFILE CHECKSUM: d4fba481ed8c9ca2a5e96199abf27ce61be109db
 
 COCOAPODS: 1.0.1

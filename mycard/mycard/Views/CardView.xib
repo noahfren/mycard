@@ -33,62 +33,66 @@
                     <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2V6-Re-XyA">
-                    <rect key="frame" x="47" y="143" width="49" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="noahfren@umich.ecu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-JJ-D9Y">
-                    <rect key="frame" x="123" y="164" width="162.5" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gf-qn-1dU">
                     <rect key="frame" x="143" y="31" width="197" height="41"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                     <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygj-RY-jX7">
-                    <rect key="frame" x="51" y="164" width="41" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(516) 376-6216" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wM0-wk-79p">
-                    <rect key="frame" x="123" y="143" width="120" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Xct-53-1Dd">
+                    <rect key="frame" x="-22" y="164" width="214" height="31"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="cX5-9Y-JcH">
+                            <rect key="frame" x="0.0" y="0.0" width="31" height="31"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="cX5-9Y-JcH" secondAttribute="height" multiplier="1:1" id="nTN-Wk-0xj"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="noahfren@umich.ecu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHH-JJ-D9Y">
+                            <rect key="frame" x="51" y="0.0" width="163" height="31"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5aN-D9-EQm">
+                    <rect key="frame" x="90" y="134" width="170" height="30"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phoneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="b1m-0N-0Wb">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="b1m-0N-0Wb" secondAttribute="height" multiplier="1:1" id="iZY-O5-rzv"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(516) 376-6216" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wM0-wk-79p">
+                            <rect key="frame" x="50" y="0.0" width="120" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.20392157137393951" green="0.28627452254295349" blue="0.36862745881080627" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="XP6-ez-ppd" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.6" id="1tg-sg-Ojk"/>
-                <constraint firstItem="2V6-Re-XyA" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.8" id="3sg-cr-Li7"/>
                 <constraint firstItem="7gf-qn-1dU" firstAttribute="leading" secondItem="XP6-ez-ppd" secondAttribute="trailing" constant="20" id="6Qs-dI-wgt"/>
+                <constraint firstItem="5aN-D9-EQm" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.8" id="7tP-n5-jmK"/>
                 <constraint firstItem="7gf-qn-1dU" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.35" id="9WP-Sf-BZ0"/>
-                <constraint firstItem="Ygj-RY-jX7" firstAttribute="centerX" secondItem="XP6-ez-ppd" secondAttribute="centerX" id="DJT-MJ-Vl2"/>
                 <constraint firstAttribute="trailing" secondItem="gcd-80-Use" secondAttribute="trailing" constant="10" id="Ey9-oJ-RZY"/>
-                <constraint firstItem="wM0-wk-79p" firstAttribute="leading" secondItem="XP6-ez-ppd" secondAttribute="trailing" id="FiD-8T-apG"/>
+                <constraint firstItem="Xct-53-1Dd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="IbC-Nu-j9b"/>
                 <constraint firstItem="gcd-80-Use" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.35" id="Jmm-u7-5EV"/>
                 <constraint firstItem="XP6-ez-ppd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.1" id="M23-IK-OCg"/>
-                <constraint firstItem="2V6-Re-XyA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.7" id="NyU-cM-oDW"/>
-                <constraint firstItem="zHH-JJ-D9Y" firstAttribute="leading" secondItem="XP6-ez-ppd" secondAttribute="trailing" id="XdY-5f-Q4v"/>
-                <constraint firstItem="wM0-wk-79p" firstAttribute="top" secondItem="2V6-Re-XyA" secondAttribute="top" id="btq-fk-uLL"/>
-                <constraint firstItem="Ygj-RY-jX7" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.9" id="cKF-IP-7pj"/>
+                <constraint firstItem="5aN-D9-EQm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.65" id="PAq-I6-chj"/>
+                <constraint firstItem="Xct-53-1Dd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.8" id="dKt-Mh-PMV"/>
+                <constraint firstItem="Xct-53-1Dd" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.95" id="dg4-pb-8c6"/>
                 <constraint firstItem="7gf-qn-1dU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.15" id="f0g-Qd-wHB"/>
                 <constraint firstItem="gcd-80-Use" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.55" id="hFn-iC-ODW"/>
-                <constraint firstItem="Ygj-RY-jX7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.8" id="iO5-Z4-YHD"/>
                 <constraint firstItem="XP6-ez-ppd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="kP8-e6-xKq"/>
-                <constraint firstItem="zHH-JJ-D9Y" firstAttribute="bottom" secondItem="Ygj-RY-jX7" secondAttribute="bottom" id="lfB-Bw-6HQ"/>
-                <constraint firstItem="2V6-Re-XyA" firstAttribute="centerX" secondItem="XP6-ez-ppd" secondAttribute="centerX" id="mWN-aw-s5p"/>
+                <constraint firstItem="5aN-D9-EQm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lTO-lP-Pvq"/>
                 <constraint firstAttribute="trailing" secondItem="7gf-qn-1dU" secondAttribute="trailing" constant="10" id="opa-8f-au5"/>
                 <constraint firstItem="gcd-80-Use" firstAttribute="leading" secondItem="XP6-ez-ppd" secondAttribute="trailing" constant="17" id="rI6-Bp-fk5"/>
-                <constraint firstItem="zHH-JJ-D9Y" firstAttribute="top" secondItem="Ygj-RY-jX7" secondAttribute="top" id="tFE-0L-TKC"/>
-                <constraint firstItem="wM0-wk-79p" firstAttribute="bottom" secondItem="2V6-Re-XyA" secondAttribute="bottom" id="voL-7K-epu"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -101,4 +105,8 @@
             <point key="canvasLocation" x="485" y="274.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="mailIcon" width="1200" height="1200"/>
+        <image name="phoneIcon" width="1200" height="1200"/>
+    </resources>
 </document>

@@ -63,6 +63,12 @@ extension UIImage {
         
         return result
     }
+    
+    var resizeForPreview: UIImage? {
+        
+        let previewSize = CGSize(width: 200, height: 200)
+        return ImageHelper.resizeImage(self.square!, targetSize: previewSize)
+    }
 }
 
 class ImageHelper {

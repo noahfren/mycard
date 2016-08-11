@@ -11,6 +11,7 @@ import iCarousel
 import JSSAlertView
 import Parse
 import MultipeerConnectivity
+import Contacts
 
 class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, iCarouselDataSource, iCarouselDelegate {
     
@@ -19,6 +20,7 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
     
     @IBOutlet var carousel: iCarousel!
     @IBOutlet var userCardSuperview: UIView!
+    @IBOutlet var navBar: UINavigationItem!
     
     var userCardView: CardView!
     
@@ -32,11 +34,13 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Declaring and instantiating the app delegate
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
         // Do any additional setup after loading the view.
+        
+        // Set up nav bar
+        navBar.title = "Connected with: \(connectedUserCard.firstName!)"
+        
+        // Setting up iCarousel view
         carousel.type = .Rotary
         carousel.vertical = true
         
@@ -79,6 +83,10 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        appDelegate.mpcManager.disconnectFromSession()
     }
     
     // MARK: - iCarousel Delegate Functions
@@ -144,24 +152,70 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
         query.whereKey("objectId", equalTo: recievedCardId)
         query.findObjectsInBackgroundWithBlock() {
             (results: [PFObject]?, error: NSError?) -> Void in
-                let cardRecieved = results?.first as! Card?
-                if cardRecieved != nil {
-                    dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                        let notification = JSSAlertView().show(
-                            self,
-                            title: "New Card Recieved",
-                            text: "\(senderName) sent you a card.",
-                            buttonText: "Okay",
-                            color: WET_ASPHALT
-                        )
-                        notification.setTextTheme(.Light)
+            
+            let cardRecieved = results?.first as! Card?
+            cardRecieved?.fetchImage() {
+                dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                    let cardImage = cardRecieved?.image!.square!
+                    cardImage?.drawInRect(CGRect(x: 0, y: 0, width: 100, height: 100))
+                    let notification = JSSAlertView().show(
+                        self,
+                        title: "\(cardRecieved!.firstName!) \(cardRecieved!.lastName!)",
+                        text: "Card sent from \(senderName).",
+                        buttonText: "Save",
+                        cancelButtonText: "Dismiss",
+                        iconImage: cardImage!.resizeForPreview!.circle!,
+                        color: WET_ASPHALT
+                    )
+                    notification.setTextTheme(.Light)
+                    notification.addAction() {
+                        ParseManager.sendCard(PFUser.currentUser()!, card: cardRecieved!)
+                        
+                        let newContact = cardRecieved!.toCNContact()
+                        do {
+                            let saveRequest = CNSaveRequest()
+                            saveRequest.addContact(newContact, toContainerWithIdentifier: nil)
+                            try self.appDelegate.contactStore.executeSaveRequest(saveRequest)
+                        }
+                        catch {
+                            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                                
+                                let alert = JSSAlertView().show(
+                                    self,
+                                    title: "Contact could not be saved",
+                                    text: "Please make sure myCard has access to your contacts in settings.",
+                                    buttonText: "Dismiss",
+                                    color: WET_ASPHALT
+                                )
+                                alert.setTextTheme(.Light)
+                            }
+                        }
+                        
+                        self.collectedCards.append(cardRecieved!)
+                        self.carousel.reloadData()
+                        self.carousel.scrollToItemAtIndex((self.collectedCards.count - 1), animated: true)
                     }
-                    self.collectedCards.append(cardRecieved!)
-                    self.carousel.reloadData()
-                    self.carousel.scrollToItemAtIndex((self.collectedCards.count - 1), animated: true)
                 }
+            }
         }
         
+    }
+    
+    func disconnectedFromSession() {
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+         
+            let notification = JSSAlertView().show(
+                self,
+                title: "Connection Ended",
+                text: "You are no longer connected with \(self.connectedUserCard.firstName!) \(self.connectedUserCard.lastName!).",
+                buttonText: "Okay",
+                color: WET_ASPHALT
+            )
+            notification.setTextTheme(.Light)
+            notification.addAction() {
+                self.performSegueWithIdentifier("Disconnected", sender: self)
+            }
+        }
     }
     
     func sendCard(selectedCard: Card) {
@@ -177,7 +231,6 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
             )
             alertView.setTextTheme(.Light)
             alertView.addAction() { () -> Void in
-                ParseManager.sendCard(self.connectedUser, card: selectedCard)
                 let recievedCardNotification = RecievedCardNotification(
                     sentFrom: "\(self.userCardView.card.firstName!) \(self.userCardView.card.lastName!)",
                     cardId: selectedCard.objectId!
@@ -193,16 +246,6 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
         
         sendCard(userCardView.card)
     }
-    
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

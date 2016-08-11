@@ -12,5 +12,6 @@ target 'mycard' do
   pod 'IQKeyboardManagerSwift'
   pod 'Parse'
   pod 'iCarousel'
-  
+  pod 'SwiftValidator'
+  pod 'ParseUI'  
 end
