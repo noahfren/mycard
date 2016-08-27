@@ -103,10 +103,6 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
         //create new view if no view is available for recycling
         if (view == nil)
         {
-            //don't do anything specific to the index within
-            //this `if (view == nil) {...}` statement because the view will be
-            //recycled and used with other index values later
-            
             // Set up view inside items here
             let cardWidth = (self.carousel.frame.width - 20)
             let cardHeight = cardWidth * (4/7)
@@ -117,14 +113,6 @@ class ShareCardsViewController: UIViewController, MPCManagerShareDataDelegate, i
             //get a reference to the label in the recycled view
             cardView = view as? CardView
         }
-        
-        
-        
-        //set item label
-        //remember to always set any properties of your carousel item
-        //views outside of the `if (view == nil) {...}` check otherwise
-        //you'll get weird issues with carousel item content appearing
-        //in the wrong place in the carousel
         
         // set properties of view items here
         cardView!.card = collectedCards[index]

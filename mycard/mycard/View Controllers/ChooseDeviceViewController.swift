@@ -175,6 +175,7 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         query.getObjectInBackgroundWithId(selectedPeerUserInfo["cardId"]!) {
             (result: PFObject?, error: NSError?) -> Void in
                 cell.card = result as? Card
+                ErrorManager.defaultError(self)
         }
         
         return cell

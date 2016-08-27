@@ -67,64 +67,11 @@ extension UIImage {
     var resizeForPreview: UIImage? {
         
         let previewSize = CGSize(width: 200, height: 200)
-        return ImageHelper.resizeImage(self.square!, targetSize: previewSize)
+        return ImageManager.resizeImage(self.square!, targetSize: previewSize)
     }
 }
 
-class ImageHelper {
-    
-    // Function that returns path to filesystem for saving images
-    static func getImageDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let imageDirectory = paths[0]
-        return imageDirectory
-    }
-    
-    static func getImageDirectory(withFileName nameWithExtension: String) -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let imageDirectory = paths[0]
-        return imageDirectory.stringByAppendingPathComponent(nameWithExtension)
-    }
-    
-    // Function takes name and image data and saves image as jpeg to application sandbox
-    static func saveImageAsJPEG(nameWithExtension: String, image: UIImage) {
-        if let data = UIImageJPEGRepresentation(image, 0.8) {
-            let filename = getImageDirectory().stringByAppendingPathComponent(nameWithExtension)
-            data.writeToFile(filename, atomically: true)
-        }
-    }
-    
-    static func imageToNSData(imageDirectory: String) -> NSData {
-        if let image = UIImage(contentsOfFile: imageDirectory) {
-            return NSKeyedArchiver.archivedDataWithRootObject(image)
-        }
-        else {
-            return NSKeyedArchiver.archivedDataWithRootObject(UIImage(named: "defaultUser")!.circle!)
-        }
-    }
-    
-    static func dataToImage(data: NSData) -> UIImage {
-        let dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Dictionary<String, AnyObject>
-        let imageData = dictionary["imageData"] as! NSData
-        return NSKeyedUnarchiver.unarchiveObjectWithData(imageData) as! UIImage
-    }
-
-    static func randomImageFileName() -> String {
-        
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = UInt32(allowedChars.characters.count)
-        var randomString = ""
-        
-        for _ in (0..<32) {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let newCharacter = allowedChars[allowedChars.startIndex.advancedBy(randomNum)]
-            randomString += String(newCharacter)
-        }
-        randomString += ".jpeg"
-        
-        return randomString
-    }
-    
+class ImageManager {
     
     static func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size

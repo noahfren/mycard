@@ -58,14 +58,14 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
             else {
                 let image = UIImage(named: "defaultUser")
                 let newSize = CGSize(width: 150, height: 150)
-                let smallerImage = ImageHelper.resizeImage(image!.square!, targetSize: newSize)
+                let smallerImage = ImageManager.resizeImage(image!.square!, targetSize: newSize)
                 imageField.image = smallerImage
             }
         }
         else {
             let image = UIImage(named: "defaultUser")
             let newSize = CGSize(width: 150, height: 150)
-            let smallerImage = ImageHelper.resizeImage(image!.square!, targetSize: newSize)
+            let smallerImage = ImageManager.resizeImage(image!.square!, targetSize: newSize)
             imageField.image = smallerImage
         }
         
@@ -134,7 +134,7 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
             
         })
         let newSize = CGSize(width: 150, height: 150)
-        let smallerImage = ImageHelper.resizeImage(image.square!, targetSize: newSize)
+        let smallerImage = ImageManager.resizeImage(image.square!, targetSize: newSize)
         imageField.image = smallerImage
         
     }

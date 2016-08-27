@@ -47,9 +47,6 @@ class ValidationManager {
                     if hasAtSymbol {
                         hasPeriod = true
                     }
-                    else {
-                        return false
-                    }
                 }
             }
             

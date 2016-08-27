@@ -101,12 +101,7 @@ class CardInfoViewController: UIViewController, UINavigationControllerDelegate, 
         newCard["phoneNumber"] = phoneNumberField.text!
         newCard["email"] = emailFIeld.text!
         
-        if let image = imageView.image {
-            newCard.image = image
-        }
-        else {
-            newCard.image = UIImage(named: "defaultUser")!
-        }
+        newCard.image = imageView.image!
         
         let imageFile = UIImageJPEGRepresentation(newCard.image!, 1.0)
         
@@ -115,6 +110,11 @@ class CardInfoViewController: UIViewController, UINavigationControllerDelegate, 
         
         newCard.saveInBackgroundWithBlock() {
             (succeeded: Bool, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                ErrorManager.signUpError(self)
+                return
+            }
             
             PFUser.logInWithUsernameInBackground(self.email, password: self.password) {
                 (user: PFUser?, error: NSError?) -> Void in
@@ -144,7 +144,7 @@ class CardInfoViewController: UIViewController, UINavigationControllerDelegate, 
         
         let image = UIImage(named: "defaultUser")
         let newSize = CGSize(width: 150, height: 150)
-        let smallerImage = ImageHelper.resizeImage(image!.square!, targetSize: newSize)
+        let smallerImage = ImageManager.resizeImage(image!.square!, targetSize: newSize)
         imageView.image = smallerImage
 
         
@@ -205,7 +205,7 @@ class CardInfoViewController: UIViewController, UINavigationControllerDelegate, 
             
         })
         let newSize = CGSize(width: 150, height: 150)
-        let smallerImage = ImageHelper.resizeImage(image.square!, targetSize: newSize)
+        let smallerImage = ImageManager.resizeImage(image.square!, targetSize: newSize)
         imageView.image = smallerImage
         
     }
@@ -215,16 +215,5 @@ class CardInfoViewController: UIViewController, UINavigationControllerDelegate, 
         self.view.endEditing(true)
     }
     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

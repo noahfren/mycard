@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F2F49EA91D2D48F200C5CFB4"
-               BuildableName = "mycard.app"
-               BlueprintName = "mycard"
-               ReferencedContainer = "container:mycard.xcodeproj">
+               BuildableName = "myCard.app"
+               BlueprintName = "myCard"
+               ReferencedContainer = "container:myCard.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2F49EA91D2D48F200C5CFB4"
-            BuildableName = "mycard.app"
-            BlueprintName = "mycard"
-            ReferencedContainer = "container:mycard.xcodeproj">
+            BuildableName = "myCard.app"
+            BlueprintName = "myCard"
+            ReferencedContainer = "container:myCard.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2F49EA91D2D48F200C5CFB4"
-            BuildableName = "mycard.app"
-            BlueprintName = "mycard"
-            ReferencedContainer = "container:mycard.xcodeproj">
+            BuildableName = "myCard.app"
+            BlueprintName = "myCard"
+            ReferencedContainer = "container:myCard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F2F49EA91D2D48F200C5CFB4"
-            BuildableName = "mycard.app"
-            BlueprintName = "mycard"
-            ReferencedContainer = "container:mycard.xcodeproj">
+            BuildableName = "myCard.app"
+            BlueprintName = "myCard"
+            ReferencedContainer = "container:myCard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

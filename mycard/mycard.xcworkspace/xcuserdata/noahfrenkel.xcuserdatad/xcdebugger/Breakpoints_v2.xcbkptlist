@@ -38,16 +38,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "mycard/MPCManager.swift"
-            timestampString = "492562035.438391"
+            filePath = "mycard/CardInfoViewController.swift"
+            timestampString = "494020083.330129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "session(_:didReceiveData:fromPeer:)"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "imagePickerController(_:didFinishPickingImage:editingInfo:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

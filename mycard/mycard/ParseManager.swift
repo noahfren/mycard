@@ -58,6 +58,10 @@ class ParseManager {
         query.whereKey(ParseUserHasCardCard, equalTo: card)
         query.findObjectsInBackgroundWithBlock() {
             (results: [PFObject]?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                ErrorManager.defaultError(self)
+            }
             if let results = results {
                 if results.count == 0 {
                     userHasCardObject.saveInBackgroundWithBlock(nil)
@@ -78,6 +82,11 @@ class ParseManager {
         query.findObjectsInBackgroundWithBlock() {
             (results: [PFObject]?, error: NSError?) -> Void in
             
+            if (error != nil) {
+                
+                ErrorManager.defaultError(self)
+            }
+            
             if let userHasCard = results?.first {
                 userHasCard.deleteInBackground()
             }
@@ -91,6 +100,10 @@ class ParseManager {
         
         query.findObjectsInBackgroundWithBlock() {
             (results: [PFObject]?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                ErrorManager.defaultError(self)
+            }
             
             if let userCard = results?.first as? Card {
                 userCard["firstName"] = card.firstName!

@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         parseLoginManager = ParseLoginManager {[unowned self] user, error in
             // Initialize the ParseLoginManager with a callback
             if error != nil {
-                print("error logging in")
+                ErrorManager.signInError(self)
             }
             else  if let _ = user {
                 // if login was successful, get user's card and display the TabBarController

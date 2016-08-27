@@ -13,12 +13,7 @@ class CardView: UIView {
     
     var view: UIView!
 
-    @IBOutlet weak var image: UIImageView! {
-        didSet {
-            //image.layer.cornerRadius = image.frame.size.height / 2
-            //image.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var firstNameLabel : UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
     @IBOutlet weak var phoneNumber: UILabel!
@@ -61,10 +56,6 @@ class CardView: UIView {
         // Adding custom subview on top of our view
         addSubview(view)
         
-        // Add border
-        // view.layer.borderWidth = 1
-        // view.layer.borderColor = UIColor.lightGrayColor().CGColor
-        
         // Add shadow
         view.layer.shadowColor = UIColor.grayColor().CGColor
         view.layer.shadowOpacity = 1
@@ -82,13 +73,5 @@ class CardView: UIView {
         
         return view
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
 
 }

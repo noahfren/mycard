@@ -16,6 +16,7 @@
 		F25ABEFB1D5A71FB0088A10F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFA1D5A71FB0088A10F /* LogInViewController.swift */; };
 		F25ABEFD1D5A83150088A10F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFC1D5A83150088A10F /* ProfileViewController.swift */; };
 		F25ABEFF1D5A8C020088A10F /* CardInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABEFE1D5A8C020088A10F /* CardInfoViewController.swift */; };
+		F25ABF031D70D3800088A10F /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25ABF021D70D3800088A10F /* ErrorManager.swift */; };
 		F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */; };
 		F2601A3A1D36939F00E255F2 /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A381D36939F00E255F2 /* EditInfoViewController.swift */; };
 		F2601A3C1D3693AA00E255F2 /* PeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */; };
@@ -42,6 +43,7 @@
 		F25ABEFA1D5A71FB0088A10F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = "View Controllers/LogInViewController.swift"; sourceTree = "<group>"; };
 		F25ABEFC1D5A83150088A10F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F25ABEFE1D5A8C020088A10F /* CardInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfoViewController.swift; sourceTree = "<group>"; };
+		F25ABF021D70D3800088A10F /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		F2601A371D36939F00E255F2 /* ChooseDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseDeviceViewController.swift; path = "View Controllers/ChooseDeviceViewController.swift"; sourceTree = "<group>"; };
 		F2601A381D36939F00E255F2 /* EditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditInfoViewController.swift; path = "View Controllers/EditInfoViewController.swift"; sourceTree = "<group>"; };
 		F2601A3B1D3693AA00E255F2 /* PeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeerTableViewCell.swift; path = Views/PeerTableViewCell.swift; sourceTree = "<group>"; };
@@ -50,7 +52,7 @@
 		F29B369D1D4AB03100CFDD78 /* ShareCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareCardsViewController.swift; path = "View Controllers/ShareCardsViewController.swift"; sourceTree = "<group>"; };
 		F29B36A31D4BD4D200CFDD78 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CardView.xib; path = Views/CardView.xib; sourceTree = "<group>"; };
 		F29B36A51D4FB20C00CFDD78 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Views/CardView.swift; sourceTree = "<group>"; };
-		F2F49EAA1D2D48F200C5CFB4 /* mycard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mycard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2F49EAA1D2D48F200C5CFB4 /* myCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F49EAD1D2D48F200C5CFB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F49EB21D2D48F200C5CFB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2F49EB41D2D48F200C5CFB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				F29B36991D48F8A300CFDD78 /* ParseManager.swift */,
 				F2235B6F1D581E1700D3C906 /* ValidationManager.swift */,
 				F2235B711D59205D00D3C906 /* ParseLoginManager.swift */,
+				F25ABF021D70D3800088A10F /* ErrorManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -145,7 +148,7 @@
 		F2F49EAB1D2D48F200C5CFB4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F2F49EAA1D2D48F200C5CFB4 /* mycard.app */,
+				F2F49EAA1D2D48F200C5CFB4 /* myCard.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,9 +182,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F2F49EA91D2D48F200C5CFB4 /* mycard */ = {
+		F2F49EA91D2D48F200C5CFB4 /* myCard */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2F49EBC1D2D48F200C5CFB4 /* Build configuration list for PBXNativeTarget "mycard" */;
+			buildConfigurationList = F2F49EBC1D2D48F200C5CFB4 /* Build configuration list for PBXNativeTarget "myCard" */;
 			buildPhases = (
 				33A7EA7C4F88075F070D4907 /* [CP] Check Pods Manifest.lock */,
 				F2F49EA61D2D48F200C5CFB4 /* Sources */,
@@ -194,9 +197,9 @@
 			);
 			dependencies = (
 			);
-			name = mycard;
+			name = myCard;
 			productName = mycard;
-			productReference = F2F49EAA1D2D48F200C5CFB4 /* mycard.app */;
+			productReference = F2F49EAA1D2D48F200C5CFB4 /* myCard.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -211,11 +214,11 @@
 				TargetAttributes = {
 					F2F49EA91D2D48F200C5CFB4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 466QVE4T74;
+						DevelopmentTeam = D32GX8NAZ7;
 					};
 				};
 			};
-			buildConfigurationList = F2F49EA51D2D48F200C5CFB4 /* Build configuration list for PBXProject "mycard" */;
+			buildConfigurationList = F2F49EA51D2D48F200C5CFB4 /* Build configuration list for PBXProject "myCard" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -228,7 +231,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F2F49EA91D2D48F200C5CFB4 /* mycard */,
+				F2F49EA91D2D48F200C5CFB4 /* myCard */,
 			);
 		};
 /* End PBXProject section */
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2235B701D581E1700D3C906 /* ValidationManager.swift in Sources */,
+				F25ABF031D70D3800088A10F /* ErrorManager.swift in Sources */,
 				F29B369A1D48F8A300CFDD78 /* ParseManager.swift in Sources */,
 				F2235B4F1D56AA1200D3C906 /* CollectedCardsViewController.swift in Sources */,
 				F2601A391D36939F00E255F2 /* ChooseDeviceViewController.swift in Sources */,
@@ -438,8 +442,8 @@
 				);
 				INFOPLIST_FILE = mycard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.noahfren-umich.mycard";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.noahfrenkel.mycard;
+				PRODUCT_NAME = myCard;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -457,8 +461,8 @@
 				);
 				INFOPLIST_FILE = mycard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.noahfren-umich.mycard";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.noahfrenkel.mycard;
+				PRODUCT_NAME = myCard;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -466,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F2F49EA51D2D48F200C5CFB4 /* Build configuration list for PBXProject "mycard" */ = {
+		F2F49EA51D2D48F200C5CFB4 /* Build configuration list for PBXProject "myCard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2F49EBA1D2D48F200C5CFB4 /* Debug */,
@@ -475,7 +479,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2F49EBC1D2D48F200C5CFB4 /* Build configuration list for PBXNativeTarget "mycard" */ = {
+		F2F49EBC1D2D48F200C5CFB4 /* Build configuration list for PBXNativeTarget "myCard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2F49EBD1D2D48F200C5CFB4 /* Debug */,
