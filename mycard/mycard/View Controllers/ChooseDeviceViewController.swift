@@ -42,10 +42,10 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         
         // Attempting to load user's contact info from Parse
         if let card = appDelegate.currentUserCard {
-            
-            print(card.firstName)
             userCard = card
-            
+        }
+        else {
+            ErrorManager.defaultError(self)
         }
         // If no info is found, segue to getContactInfoViewController
         
@@ -72,6 +72,7 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         // Resetting the connected peer Id
         connectedPeerId = nil
         
+        userCard = appDelegate.currentUserCard
         tblPeers.reloadData()
         
         // Start searching for other devices running the app
@@ -174,8 +175,13 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         query.includeKey(ParseManager.ParseCardBelongsToUser)
         query.getObjectInBackgroundWithId(selectedPeerUserInfo["cardId"]!) {
             (result: PFObject?, error: NSError?) -> Void in
-                cell.card = result as? Card
-                ErrorManager.defaultError(self)
+            
+                if error != nil {
+                    ErrorManager.defaultError(self)
+                }
+                else {
+                    cell.card = result as? Card
+                }
         }
         
         return cell
@@ -197,9 +203,6 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
     
     
     // MARK: - Empty Data Set Delegate / Data Source
-    /*func imageForEmptyDataSet(scrollView: UIScrollView) -> UIImage {
-        return UIImage(named: "empty_placeholder")!
-    }*/
     
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString {
         let text = "Can't Find Nearby Users"
@@ -223,6 +226,9 @@ class ChooseDeviceViewController: UIViewController, UITableViewDelegate, UITable
         
         appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
         appDelegate.mpcManager.browser.stopBrowsingForPeers()
+        
+        appDelegate.mpcManager.foundPeers = []
+        tblPeers.reloadData()
         
         if segue.identifier == "ConnectedWithPeer" {
             let shareCardsViewController = segue.destinationViewController as! ShareCardsViewController

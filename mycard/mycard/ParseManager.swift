@@ -32,7 +32,6 @@ class ParseManager {
         do {
             card = try query.getFirstObject() as? Card
         } catch {
-            print("Could not get card")
             
         }
         return card

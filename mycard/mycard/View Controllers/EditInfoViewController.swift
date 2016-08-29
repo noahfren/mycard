@@ -13,12 +13,19 @@ import JSSAlertView
 
 let USER_IMAGE_FILENAME = "userImage.jpeg"
 
+protocol UpdateCardDelegate {
+    
+    func updateCard()
+}
+
 class EditInfoViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     // MARK: - Outlets and Properties
     var card: Card!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    var updateCardDelegate: UpdateCardDelegate?
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -191,6 +198,7 @@ class EditInfoViewController: UIViewController, UINavigationControllerDelegate, 
         }
         
         ParseManager.updateCard(card)
+        appDelegate.currentUserCard = card
 
     }
 

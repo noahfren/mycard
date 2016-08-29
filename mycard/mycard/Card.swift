@@ -75,7 +75,7 @@ class Card: PFObject, PFSubclassing {
             completionBlock()
         }
         catch {
-            print("could not get image")
+            ErrorManager.defaultError(self)
         }
     }
     

@@ -49,7 +49,6 @@ class CardView: UIView {
         view = loadViewFromNib()
         
         view.frame = frame
-        print(frame)
         
         // Make the view stretch with containing view
         view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]

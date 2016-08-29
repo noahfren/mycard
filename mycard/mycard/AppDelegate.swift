@@ -64,23 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Parse.initializeWithConfiguration(config)
         
-        // MARK: Temporary user log-in mechanism
-        /*do {
-            try PFUser.logInWithUsername("test_user1", password: "password")
-        } catch {
-            print("Unable to log in")
-        }
-        
-        if let currentUser = PFUser.currentUser() {
-            print("\(currentUser.username!) logged in successfully")
-            currentUserCard = ParseManager.getCardForCurrentUser()
-            currentUserCard.fetchImage() {() -> Void in }
-         
-            
-        } else {
-            print("No logged in user :(")
-        }*/
-        
         let user = PFUser.currentUser()
         
         let startViewController: UIViewController

@@ -137,7 +137,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // This function will display an error if the browsing can not finish
     func browser(browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: NSError) {
-        print(error.localizedDescription)
+        ErrorManager.defaultError(self)
     }
     
     // This function runs when an invitation is recieved, it sets the manager's invitation handler to
@@ -156,7 +156,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // This function runs when the advertiser could not start, it displays an error message to the user
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: NSError) {
-        print(error.localizedDescription)
+        ErrorManager.defaultError(self)
     }
     
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {

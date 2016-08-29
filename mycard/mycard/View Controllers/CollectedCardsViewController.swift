@@ -20,6 +20,8 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
     
     var collectedCards = [Card]()
     
+    var hasNoCards = false
+    
     
     // MARK: - Lifecycle
     
@@ -30,6 +32,11 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
         carousel.type = .Rotary
         carousel.vertical = true
         
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        
+        self.collectedCards = []
         ParseManager.getCardsRecievedByUser() {
             (results: [PFObject]?, error: NSError?) -> Void in
             
@@ -38,7 +45,6 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
                 return
             }
             guard results != nil || results!.count > 0 else {
-                print("User has no cards")
                 return
             }
             
@@ -48,7 +54,7 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
             }
             
             if self.collectedCards.count == 0 {
-            
+                
                 dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                     
                     let alert = JSSAlertView().show(
@@ -60,23 +66,22 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
                     )
                     alert.setTextTheme(.Light)
                     alert.addAction() {
+                        self.hasNoCards = true
                         self.performSegueWithIdentifier("NoCards", sender: self)
                     }
                     
                 }
-            
+                
             }
-            
-            self.carousel.reloadData()
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: iCarousel Delegate and Data Source Functions
+    // MARK: - iCarousel Delegate and Data Source Functions
     
     func numberOfItemsInCarousel(carousel:iCarousel) -> Int {
         
@@ -130,7 +135,7 @@ class CollectedCardsViewController: UIViewController, iCarouselDelegate, iCarous
         }
     }
     
-    // MARK: DZNEmptyDataSet Delegate and Data Dource functions
+    // MARK: - DZNEmptyDataSet Delegate and Data Dource functions
     
     func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString {
         let text = "You Don't Have Any Cards Yet"
